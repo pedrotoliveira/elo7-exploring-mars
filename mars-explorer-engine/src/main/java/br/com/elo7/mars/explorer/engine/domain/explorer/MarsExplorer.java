@@ -33,12 +33,12 @@ class MarsExplorer implements Explorer {
 	}
 
 	@Override
-	public ExecutionResult excuteInstructions(Surface surface) {		
+	public ExplorerPosition getCurrentPosition() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public ExplorerPosition getCurrentPosition() {
+	public Collection<ExecutionResult> excuteInstructions(Surface surface) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

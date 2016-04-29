@@ -71,7 +71,7 @@ public class PlateuTest {
 		System.out.println("getDeployedExplorers");
 		Plateu instance = null;
 		Collection<Explorer> expResult = null;
-		Collection<Explorer> result = instance.getDeployedExplorers();
+		Collection<ExplorerPosition> result = instance.getExplorerPositions();
 		assertEquals(expResult, result);
 		fail("The test case is a prototype.");
 	}

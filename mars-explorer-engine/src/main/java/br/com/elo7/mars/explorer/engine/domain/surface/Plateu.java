@@ -43,11 +43,11 @@ class Plateu implements Surface {
 
 	@Override
 	public ScanResult scan(ExplorerPosition position) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public Collection<Explorer> getDeployedExplorers() {
+	public Collection<ExplorerPosition> getExplorerPositions() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

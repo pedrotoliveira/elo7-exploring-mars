@@ -7,26 +7,26 @@ package br.com.elo7.mars.explorer.engine.domain.explorer;
  */
 public enum Direction {
 	
-	NORTH('N'), SOUTH('S'), EAST('E'), WEST('W');
+	NORTH("N"), SOUTH("S"), EAST("E"), WEST("W");
 	
 	public static final String ERROR_MESSAGE = "Invalid direction: ";
 	
-	private final char direction;
+	private final String direction;
 	
-	private Direction(char direction) {
+	private Direction(String direction) {
 		this.direction = direction;
 	}
 	
-	public static Direction translate(char direction) {
+	public static Direction translate(String direction) {
 		for (Direction d : Direction.values()) {
-			if (d.getDirection() == direction) {
+			if (d.getDirection().equals(direction)) {
 				return d;
 			}
 		}
 		throw new IllegalArgumentException(ERROR_MESSAGE + direction);
 	}
 
-	protected char getDirection() {
+	protected String getDirection() {
 		return direction;
 	}
 }

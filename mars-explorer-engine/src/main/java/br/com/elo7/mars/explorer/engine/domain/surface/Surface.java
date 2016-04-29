@@ -13,8 +13,7 @@ import java.util.UUID;
  */
 public interface Surface {
 	
-	UUID getId();
-	
+	UUID getId();	
 	/**
 	 * Try Deploy a Explorer in the Specified Position
 	 * 
@@ -42,9 +41,9 @@ public interface Surface {
 	Explorer moveExplorerTo(final UUID explorerId, final ExplorerPosition newPosition);
 	
 	/**
-	 * Retrieve a Collection of Deployed Explorers.
+	 * Retrieve a Collection of Deployed Explorers Position.
 	 * 
 	 * @return a Collection of Explorer
 	 */
-	Collection<Explorer> getDeployedExplorers();	
+	Collection<ExplorerPosition> getExplorerPositions();
 }
