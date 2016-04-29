@@ -109,4 +109,15 @@ public class SurfaceScanEngineTest {
 		verify(instructionCollectionFactory, times(2)).create(anyString());
 		verify(surface, times(2)).deployExplorer(any(Explorer.class));
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testNullInput() {
+		scanEngine.process(null);
+	}
+	
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testBadInput() {
+		scanEngine.process(null);
+	}
 }
