@@ -14,20 +14,10 @@
 	</properties>
 
 	<organization>
-		<name>Elo 7</name>
+		<name>Elo7</name>
 	</organization>
-	
-	<profiles>
-		<profile>
-			<id>run-gui</id>
-			<build>
-				
-			</build>
-		</profile>
-	</profiles>
 
-	
-	<build>		
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,10 +41,10 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>				
-				<executions>					
-					<execution>						
-						<id>unpack-dependencies</id>                        
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<id>unpack-dependencies</id>
 						<phase>package</phase>
 						<goals>
 							<goal>exec</goal>
@@ -78,14 +68,14 @@
 					<execution>
 						<id>default-cli</id>
 						<goals>
-							<goal>exec</goal>                            
+							<goal>exec</goal>
 						</goals>
 						<configuration>
 							<executable>${java.home}/bin/java</executable>
 							<commandlineArgs>${runfx.args}</commandlineArgs>
 						</configuration>
 					</execution>
-				</executions>  
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -129,6 +119,11 @@
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.six2six</groupId>
+			<artifactId>fixture-factory</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 	</dependencies>
 </project>

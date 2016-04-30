@@ -1,5 +1,7 @@
 package br.com.elo7.mars.explorer.engine.domain.surface;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import java.util.UUID;
@@ -7,23 +9,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import br.com.elo7.mars.explorer.engine.test.FixtureTest;
+
 /**
+ * Plateau Unit Tests
  *
  * @author pedrotoliveira
  */
-public class PlateauTest {
-
-	public PlateauTest() {
-	}
+public class PlateauTest extends FixtureTest {
 
 	@Test
 	public void testGetId() {
-		System.out.println("getId");
-		Plateau instance = null;
-		UUID expResult = null;
-		UUID result = instance.getId();
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
+        UUID id = UUID.randomUUID();
+		assertThat(new Plateau(id, 10, 10).getId(), equalTo(id));
 	}
 
 	@Test

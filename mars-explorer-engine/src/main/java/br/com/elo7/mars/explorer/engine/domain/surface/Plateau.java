@@ -27,7 +27,7 @@ class Plateau implements Surface {
 
 	@Override
 	public UUID getId() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return id;
 	}
 
 	@Override

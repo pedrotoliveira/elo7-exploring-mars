@@ -1,31 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.elo7.mars.explorer.engine.domain.explorer;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
+import br.com.elo7.mars.explorer.engine.domain.Factory;
+import br.com.elo7.mars.explorer.engine.test.FixtureTest;
+
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
-public class ExplorerFactoryTest {
-	
-	public ExplorerFactoryTest() {
-	}
+public class ExplorerFactoryTest extends FixtureTest {
 
-	@Test
-	public void testCreate() {
-		System.out.println("create");
-		String input = "";
-		ExplorerFactory instance = new ExplorerFactory();
-		Explorer expResult = null;
-		Explorer result = instance.create(input);
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
-	}
-	
+    private Factory<Explorer> factory;
+
+    @Test
+    public void testCreate() {
+        String input = validInput();
+        Explorer explorer = factory.create(input);
+        assertNotNull(explorer);
+    }
+
+    private String validInput() {
+        return String.format("%d %d", randomInt(0, 1000), randomInt(0, 1000));
+    }
 }
