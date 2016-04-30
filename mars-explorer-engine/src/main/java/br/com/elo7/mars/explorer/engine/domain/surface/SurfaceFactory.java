@@ -17,7 +17,7 @@ public class SurfaceFactory implements Factory<Surface> {
     @Override
     public Surface create(String input) {
         Objects.requireNonNull(input, "Surface Input Is Null");
-        if (!Pattern.matches("^\\d{0,32}\\s\\d{0,32}$", input)) {
+        if (!Pattern.matches("^\\d{0,10}\\s\\d{0,10}$", input)) {
             throw new IllegalArgumentException("Invalid Input Format");
         }
         Scanner scanner = new Scanner(input);

@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import br.com.elo7.mars.explorer.engine.domain.Factory;
 import br.com.elo7.mars.explorer.engine.test.FixtureTest;
+import org.junit.Before;
 
 
 /**
@@ -16,6 +17,11 @@ public class ExplorerFactoryTest extends FixtureTest {
 
     private Factory<Explorer> factory;
 
+    @Before
+    public void setUp() {
+        this.factory = new ExplorerFactory();
+    }
+
     @Test
     public void testCreate() {
         String input = validInput();
@@ -24,6 +30,6 @@ public class ExplorerFactoryTest extends FixtureTest {
     }
 
     private String validInput() {
-        return String.format("%d %d", randomInt(0, 1000), randomInt(0, 1000));
+        return String.format("%d %d %s", randomInt(0, 1000), randomInt(0, 1000), regexValue("[NEWS]"));
     }
 }
