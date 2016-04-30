@@ -14,13 +14,13 @@ import java.util.UUID;
  *
  * @author pedrotoliveira
  */
-class Plateu implements Surface {
+class Plateau implements Surface {
 
 	private final UUID id;
 	private final Explorer[][] positions;
 	private final Map<UUID, ExplorerPosition> deployed;
 
-	protected Plateu(final UUID id, int xAxis, int yAxis) {
+	protected Plateau(final UUID id, int xAxis, int yAxis) {
 		this.id = id;
 		this.positions = new Explorer[xAxis][yAxis];
 		this.deployed = new HashMap<>();

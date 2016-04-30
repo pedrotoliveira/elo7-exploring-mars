@@ -17,15 +17,15 @@ import static org.junit.Assert.*;
  *
  * @author p-poliveira
  */
-public class PlateuTest {
+public class PlateauTest {
 	
-	public PlateuTest() {
+	public PlateauTest() {
 	}
 
 	@Test
 	public void testGetId() {
 		System.out.println("getId");
-		Plateu instance = null;
+		Plateau instance = null;
 		UUID expResult = null;
 		UUID result = instance.getId();
 		assertEquals(expResult, result);
@@ -36,7 +36,7 @@ public class PlateuTest {
 	public void testDeployExplorer() {
 		System.out.println("deployExplorer");
 		Explorer explorer = null;
-		Plateu instance = null;
+		Plateau instance = null;
 		Explorer expResult = null;
 		Explorer result = instance.deployExplorer(explorer);
 		assertEquals(expResult, result);
@@ -48,7 +48,7 @@ public class PlateuTest {
 		System.out.println("moveExplorerTo");
 		UUID explorerId = null;
 		ExplorerPosition newPosition = null;
-		Plateu instance = null;
+		Plateau instance = null;
 		Explorer expResult = null;
 		Explorer result = instance.moveExplorerTo(explorerId, newPosition);
 		assertEquals(expResult, result);
@@ -59,7 +59,7 @@ public class PlateuTest {
 	public void testScan() {
 		System.out.println("scan");
 		ExplorerPosition position = null;
-		Plateu instance = null;
+		Plateau instance = null;
 		ScanResult expResult = null;
 		ScanResult result = instance.scan(position);
 		assertEquals(expResult, result);
@@ -69,7 +69,7 @@ public class PlateuTest {
 	@Test
 	public void testGetDeployedExplorers() {
 		System.out.println("getDeployedExplorers");
-		Plateu instance = null;
+		Plateau instance = null;
 		Collection<Explorer> expResult = null;
 		Collection<ExplorerPosition> result = instance.getExplorerPositions();
 		assertEquals(expResult, result);
