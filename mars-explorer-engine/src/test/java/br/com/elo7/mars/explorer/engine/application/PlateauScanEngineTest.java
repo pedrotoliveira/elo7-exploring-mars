@@ -22,6 +22,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertThat;
 
+
 /**
  *
  * Unit tests of the PlateauScanEngine.
@@ -68,7 +69,7 @@ public class PlateauScanEngineTest {
 		Surface surface = mock(Surface.class);
 		when(surfaceFactory.create(createSurfaceInput)).thenReturn(surface);
 
-		List<Explorer> explorers = new ArrayList<>();
+		List<Explorer> deployedExplorers = new ArrayList<>();
 		List<Collection<Instruction>> instructionsList = new ArrayList<>();
 
 		while(it.hasNext()) {
@@ -82,7 +83,7 @@ public class PlateauScanEngineTest {
 			when(explorerFactory.create(createExplorerInput)).thenReturn(explorer);
 			when(surface.deployExplorer(explorer)).thenReturn(explorer);
 
-			explorers.add(explorer);
+			deployedExplorers.add(explorer);
 			instructionsList.add(instructions);
 		}
 
@@ -95,17 +96,21 @@ public class PlateauScanEngineTest {
 					scanner.nextInt(),
 					Direction.translate(scanner.next()));
 
-			when(explorers.get(index++).getCurrentPosition()).thenReturn(position);
+			when(deployedExplorers.get(index++).getCurrentPosition()).thenReturn(position);
 			expectedPositions.add(position);
 		}
-		when(surface.getExplorerPositions()).thenReturn(expectedPositions);
-
+        
 		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
 
 		verify(surfaceFactory, times(1)).create(createSurfaceInput);
 		verify(explorerFactory, times(2)).create(anyString());
 		verify(instructionCollectionFactory, times(2)).create(anyString());
 		verify(surface, times(2)).deployExplorer(any(Explorer.class));
+        deployedExplorers.forEach((Explorer item) -> {
+            verify(item).registerInstructions(anyCollectionOf(Instruction.class));
+            verify(item).excuteInstructions(surface);
+            verify(item).getCurrentPosition();
+        });
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -115,7 +120,11 @@ public class PlateauScanEngineTest {
 
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testBadInput() {
-		scanEngine.createSurfaceAndScan(null);
+	public void testBadInputSequence() {
+        Collection<String> badInputs = new ArrayList<String>() {{
+			add("5 5");
+			add("1 2 Z");
+		}};
+		scanEngine.createSurfaceAndScan(badInputs);
 	}
 }

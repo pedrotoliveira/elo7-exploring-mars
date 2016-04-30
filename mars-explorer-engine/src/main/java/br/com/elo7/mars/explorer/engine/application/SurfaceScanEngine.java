@@ -3,6 +3,7 @@ package br.com.elo7.mars.explorer.engine.application;
 import java.util.Collection;
 
 /**
+ * A Surface Scan Engine
  *
  * @author pedrotoliveira
  */

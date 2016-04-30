@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.elo7.mars.explorer.engine.domain.surface;
 
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
-import java.util.Collection;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -15,10 +9,10 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
 public class PlateauTest {
-	
+
 	public PlateauTest() {
 	}
 
@@ -44,18 +38,6 @@ public class PlateauTest {
 	}
 
 	@Test
-	public void testMoveExplorerTo() {
-		System.out.println("moveExplorerTo");
-		UUID explorerId = null;
-		ExplorerPosition newPosition = null;
-		Plateau instance = null;
-		Explorer expResult = null;
-		Explorer result = instance.moveExplorerTo(explorerId, newPosition);
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
-	}
-
-	@Test
 	public void testScan() {
 		System.out.println("scan");
 		ExplorerPosition position = null;
@@ -65,15 +47,4 @@ public class PlateauTest {
 		assertEquals(expResult, result);
 		fail("The test case is a prototype.");
 	}
-
-	@Test
-	public void testGetDeployedExplorers() {
-		System.out.println("getDeployedExplorers");
-		Plateau instance = null;
-		Collection<Explorer> expResult = null;
-		Collection<ExplorerPosition> result = instance.getExplorerPositions();
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
-	}
-	
 }

@@ -3,7 +3,6 @@ package br.com.elo7.mars.explorer.engine.domain.surface;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,17 +36,7 @@ class Plateau implements Surface {
 	}
 
 	@Override
-	public Explorer moveExplorerTo(final UUID explorerId, final ExplorerPosition newPosition) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
 	public ScanResult scan(ExplorerPosition position) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public Collection<ExplorerPosition> getExplorerPositions() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
