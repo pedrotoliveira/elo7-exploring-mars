@@ -32,4 +32,9 @@ public class ExplorerFactoryTest extends FixtureTest {
     private String validInput() {
         return String.format("%d %d %s", randomInt(0, 1000), randomInt(0, 1000), regexValue("[NEWS]"));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullInput() {
+        factory.create(null);
+    }
 }
