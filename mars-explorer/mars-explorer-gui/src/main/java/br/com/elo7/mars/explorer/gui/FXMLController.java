@@ -1,4 +1,4 @@
-package br.com.elo7.mars.explorer.engine.gui;
+package br.com.elo7.mars.explorer.gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
