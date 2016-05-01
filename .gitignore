@@ -28,3 +28,6 @@ nb*
 *.jar
 *.war
 *.ear
+/mars-explorer/mars-explorer-engine/target/
+/mars-explorer/mars-explorer-gui/target/
+/mars-explorer/mars-explorer-api/target/
