@@ -7,6 +7,7 @@ import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import org.apache.commons.lang.Validate;
 
 /**
  * A Plateau Surface Scan Engine.
@@ -18,7 +19,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
     private final Factory<Surface> surfaceFactory;
     private final Factory<Explorer> explorerFactory;
     private final Factory<Collection<Instruction>> instructionCollectionFactory;
-
+	
     public PlateauScanEngine(Factory<Surface> surfaceFactory,
             Factory<Explorer> explorerFactory,
             Factory<Collection<Instruction>> instructionCollectionFactory) {
@@ -30,30 +31,28 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 
     @Override
     public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
-        Iterator<String> it = inputs.iterator();
-        Surface surface = createSurface(it.next());
-        return moveExplorers(createAndDeployExplorers(it, surface), surface);
+        Iterator<String> inputsIterator = inputs.iterator();
+        Surface surface = createSurface(inputsIterator.next());
+        return moveExplorers(createAndDeployExplorers(inputsIterator, surface), surface);
     }
 
     private Surface createSurface(String createSurfaceInput) {
-        if (createSurfaceInput == null) {
-            throw new IllegalArgumentException("Cannot Find Surface Input!");
-        }
+		Validate.notEmpty(createSurfaceInput, "Cannot Find Surface Input!");
         return surfaceFactory.create(createSurfaceInput);
     }
 
-    private Collection<Explorer> createAndDeployExplorers(Iterator<String> it, Surface surface) {
+    private Collection<Explorer> createAndDeployExplorers(Iterator<String> inputsIterator, Surface surface) {
         Collection<Explorer> deployedExplorers = new ArrayList<>();
-        while (it.hasNext()) {
-            if (!it.hasNext()) {
+        while (inputsIterator.hasNext()) {
+            if (!inputsIterator.hasNext()) {
                 throw new IllegalArgumentException("Cannot Find Explorer Coordinations Input!");
             }
-            String createExplorerInput = it.next();
+            String createExplorerInput = inputsIterator.next();
 
-            if (!it.hasNext()) {
+            if (!inputsIterator.hasNext()) {
                 throw new IllegalArgumentException("Cannot Find Instructions Input!");
             }
-            String createInstructionsInput = it.next();
+            String createInstructionsInput = inputsIterator.next();
             deployedExplorers.add(createAndDeployExplorer(createExplorerInput, createInstructionsInput, surface));
         }
         return deployedExplorers;
