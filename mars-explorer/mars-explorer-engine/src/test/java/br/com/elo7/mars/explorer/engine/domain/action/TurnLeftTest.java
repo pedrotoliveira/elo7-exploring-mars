@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.elo7.mars.explorer.engine.domain.action;
 
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.*;
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
+@RunWith(value = Parameterized.class)
 public class TurnLeftTest {
 	
 	public TurnLeftTest() {

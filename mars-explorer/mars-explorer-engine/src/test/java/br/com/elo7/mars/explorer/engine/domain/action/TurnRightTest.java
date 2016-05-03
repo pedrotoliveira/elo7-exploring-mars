@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
 public class TurnRightTest {
 	

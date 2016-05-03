@@ -47,6 +47,6 @@ public class ExplorerFactoryTest extends FixtureTest {
 
     private String invalidInput() {
         return new RandomFunction(String.class,
-                new String[]{"2 1 P", "  5   5 Z", "2 3 4 N", "q 1 S"}).generateValue();
+                new String[]{"2 1 P", "  5   5 Z", "2 3 4 N", "q 1 S", "", " "}).generateValue();
     }
 }

@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({br.com.elo7.mars.explorer.engine.domain.surface.SurfaceSuite.class, br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerSuite.class, br.com.elo7.mars.explorer.engine.domain.action.ActionSuite.class, br.com.elo7.mars.explorer.engine.domain.validator.ValidatorSuite.class})

@@ -16,7 +16,7 @@ import org.junit.Before;
  */
 public class InstructionCollectionFactoryTest extends FixtureTest {
 
-    private Factory<Collection<Instruction>> factory;
+    private Factory<Collection<InstructionAction>> factory;
 
     @Before
     public void setUp() {
@@ -25,13 +25,7 @@ public class InstructionCollectionFactoryTest extends FixtureTest {
 
 	@Test
 	public void testCreate() {
-		System.out.println("create");
-		String input = "";
-		InstructionCollectionFactory instance = new InstructionCollectionFactory();
-		Collection<Instruction> expResult = null;
-		Collection<Instruction> result = instance.create(input);
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
+		fail("To Implement");
 	}
 
 }

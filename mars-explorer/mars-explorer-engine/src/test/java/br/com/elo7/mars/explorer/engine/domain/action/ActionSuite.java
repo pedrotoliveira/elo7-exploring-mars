@@ -10,10 +10,9 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author p-poliveira
+ * @author pedrotoliveira
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({br.com.elo7.mars.explorer.engine.domain.action.TurnLeftTest.class, br.com.elo7.mars.explorer.engine.domain.action.TurnRightTest.class, br.com.elo7.mars.explorer.engine.domain.action.MoveFowardTest.class})
-public class ActionSuite {
-	
+public class ActionSuite {	
 }
