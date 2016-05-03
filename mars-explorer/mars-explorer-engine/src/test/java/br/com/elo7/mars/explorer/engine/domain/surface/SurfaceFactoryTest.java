@@ -34,7 +34,7 @@ public class SurfaceFactoryTest extends FixtureTest {
         return String.format("%d %d", randomInt(0, 1000), randomInt(0, 1000));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNullInput() {
         factory.create(null);
     }

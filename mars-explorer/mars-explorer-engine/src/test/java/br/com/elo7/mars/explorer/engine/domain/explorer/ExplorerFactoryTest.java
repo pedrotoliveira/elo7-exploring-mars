@@ -35,7 +35,7 @@ public class ExplorerFactoryTest extends FixtureTest {
         return String.format("%d %d %s", randomInt(0, 1000), randomInt(0, 1000), regexValue("[NEWS]"));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNullInput() {
         factory.create(null);
     }

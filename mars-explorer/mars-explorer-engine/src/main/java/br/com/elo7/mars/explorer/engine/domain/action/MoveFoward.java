@@ -11,5 +11,5 @@ public final class MoveFoward implements MoveAction {
 	@Override
 	public ExplorerPosition execute(ExplorerPosition currentPosition) {
 		throw new UnsupportedOperationException("Not supported yet.");
-	}	
+	}
 }

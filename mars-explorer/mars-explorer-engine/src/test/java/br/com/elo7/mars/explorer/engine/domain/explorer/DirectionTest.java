@@ -1,24 +1,22 @@
 package br.com.elo7.mars.explorer.engine.domain.explorer;
 
-import br.com.elo7.mars.explorer.engine.domain.explorer.Direction;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static br.com.elo7.mars.explorer.engine.domain.explorer.Direction.translate;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 /**
  * Direction Unit Tests
- * 
+ *
  * @author pedrotoliveira
  */
 @RunWith(value = Parameterized.class)
 public class DirectionTest {
-	
+
 	private final String directionChar;
 	private final Direction expected;
 
@@ -26,7 +24,7 @@ public class DirectionTest {
 		this.expected = expected;
 		this.directionChar = directionChar;
 	}
-	
+
 	@Parameterized.Parameters(name = "Test Case {index}:")
 	public static Collection<Object[]> testData() {
 		return Arrays.asList(new Object[][]{
@@ -36,7 +34,7 @@ public class DirectionTest {
 			{"W", Direction.WEST}
 		});
 	}
-	
+
 	@Test
 	public void testTranslate() {
 		assertThat(Direction.translate(directionChar), equalTo(expected));
