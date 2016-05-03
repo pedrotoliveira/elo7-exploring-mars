@@ -19,7 +19,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
     private final Factory<Surface> surfaceFactory;
     private final Factory<Explorer> explorerFactory;
     private final Factory<Collection<Instruction>> instructionCollectionFactory;
-	
+
     public PlateauScanEngine(Factory<Surface> surfaceFactory,
             Factory<Explorer> explorerFactory,
             Factory<Collection<Instruction>> instructionCollectionFactory) {
@@ -31,6 +31,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 
     @Override
     public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
+        Validate.notEmpty(inputs, "Missing Inputs");
         Iterator<String> inputsIterator = inputs.iterator();
         Surface surface = createSurface(inputsIterator.next());
         return moveExplorers(createAndDeployExplorers(inputsIterator, surface), surface);
@@ -43,16 +44,13 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 
     private Collection<Explorer> createAndDeployExplorers(Iterator<String> inputsIterator, Surface surface) {
         Collection<Explorer> deployedExplorers = new ArrayList<>();
+        Validate.isTrue(inputsIterator.hasNext(), "Missing Explorer Inputs");
         while (inputsIterator.hasNext()) {
-            if (!inputsIterator.hasNext()) {
-                throw new IllegalArgumentException("Cannot Find Explorer Coordinations Input!");
-            }
             String createExplorerInput = inputsIterator.next();
 
-            if (!inputsIterator.hasNext()) {
-                throw new IllegalArgumentException("Cannot Find Instructions Input!");
-            }
+            Validate.isTrue(inputsIterator.hasNext(), "Missing Instructions Input!");
             String createInstructionsInput = inputsIterator.next();
+
             deployedExplorers.add(createAndDeployExplorer(createExplorerInput, createInstructionsInput, surface));
         }
         return deployedExplorers;
