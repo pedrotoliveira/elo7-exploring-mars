@@ -16,7 +16,7 @@ public interface Explorer {
 	 * 
 	 * @param instructions 
 	 */
-	void registerInstructions(final Collection<InstructionAction> instructions);
+	Explorer registerInstructions(final Collection<InstructionAction> instructions);
 	
 	/**
 	 * 
