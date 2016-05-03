@@ -4,7 +4,7 @@ import br.com.elo7.mars.explorer.engine.domain.Factory;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Direction;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
-import br.com.elo7.mars.explorer.engine.domain.explorer.Instruction;
+import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,116 +33,139 @@ import static org.junit.Assert.assertThat;
 @RunWith(value = MockitoJUnitRunner.class)
 public class PlateauScanEngineTest {
 
-    private PlateauScanEngine scanEngine;
-    @Mock
-    private Factory<Surface> surfaceFactory;
-    @Mock
-    private Factory<Explorer> explorerFactory;
-    @Mock
-    private Factory<Collection<Instruction>> instructionCollectionFactory;
+	private PlateauScanEngine scanEngine;
+	@Mock
+	private Factory<Surface> surfaceFactory;
+	@Mock
+	private Factory<Explorer> explorerFactory;
+	@Mock
+	private Factory<Collection<InstructionAction>> instructionCollectionFactory;
 
-    @Before
-    public void setUp() {
-        this.scanEngine = new PlateauScanEngine(surfaceFactory, explorerFactory, instructionCollectionFactory);
-    }
+	@Before
+	public void setUp() {
+		this.scanEngine = new PlateauScanEngine(surfaceFactory, explorerFactory, instructionCollectionFactory);
+	}
 
-    @Test
-    @SuppressWarnings("serial")
-    public void testCreateSurfaceAndScan() {
-        Collection<String> inputs = new ArrayList<String>() {{
-                add("5 5");
-                add("1 2 N");
-                add("LMLMLMLMM");
-                add("3 3 E");
-                add("MMRMMRMRRM");
-        }};
+	@Test
+	@SuppressWarnings("serial")
+	public void testCreateSurfaceAndScan() {
+		Collection<String> inputs = createTestInputs();
+		Collection<String> expectedResults = createExpectedResult();
+		Iterator<String> inputsIterator = inputs.iterator();
 
-        Collection<String> expectedResults = new ArrayList<String>() {{
-                add("1 3 N");
-                add("5 1 E");
-        }};
+		Surface surface = createTestSurface(inputsIterator);
+		List<Explorer> deployedExplorers = createTestExplorers(inputsIterator, surface);
+		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
+		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
+		
+		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
 
-        Iterator<String> it = inputs.iterator();
-        String createSurfaceInput = it.next();
+		verify(surfaceFactory, times(1)).create(inputs.iterator().next());
+		verify(explorerFactory, times(2)).create(anyString());
+		verify(instructionCollectionFactory, times(2)).create(anyString());
+		verify(surface, times(2)).deployExplorer(any(Explorer.class));
+		deployedExplorers.forEach((Explorer explorer) -> {
+			verify(explorer, atLeastOnce()).registerInstructions(anyCollectionOf(InstructionAction.class));
+			verify(explorer, atLeastOnce()).excuteInstructions(surface);
+			verify(explorer, atLeastOnce()).getCurrentPosition();
+		});
+	}
 
-        Surface surface = mock(Surface.class);
-        when(surfaceFactory.create(createSurfaceInput)).thenReturn(surface);
+	private Collection<String> createTestInputs() {
+		return new ArrayList<String>() {{
+			add("5 5");
+			add("1 2 N");
+			add("LMLMLMLMM");
+			add("3 3 E");
+			add("MMRMMRMRRM");
+		}};
+	}
 
-        List<Explorer> deployedExplorers = new ArrayList<>();
-        List<Collection<Instruction>> instructionsList = new ArrayList<>();
+	private Collection<String> createExpectedResult() {
+		Collection<String> expectedResults = new ArrayList<String>() {{
+			add("1 3 N");
+			add("5 1 E");
+		}};
+		return expectedResults;
+	}
 
-        while (it.hasNext()) {
-            String createExplorerInput = it.next();
-            String createInstructionsInput = it.next();
+	private Surface createTestSurface(Iterator<String> inputsIterator) {
+		String surfaceInput = inputsIterator.next();
+		Surface surface = mock(Surface.class);
+		when(surfaceFactory.create(surfaceInput)).thenReturn(surface);
+		return surface;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<Explorer> createTestExplorers(Iterator<String> inputsIterator, Surface surface) {
+		List<Explorer> deployedExplorers = new ArrayList<>();
+		while (inputsIterator.hasNext()) {
+			String explorerInput = inputsIterator.next();
+			String instructionInput = inputsIterator.next();
 
-            Explorer explorer = mock(Explorer.class);
-            @SuppressWarnings("unchecked")
-            Collection<Instruction> instructions = mock(Collection.class);
+			Explorer explorer = mock(Explorer.class);
+			Collection<InstructionAction> instructions = mock(Collection.class);
 
-            when(instructionCollectionFactory.create(createInstructionsInput)).thenReturn(instructions);
-            when(explorerFactory.create(createExplorerInput)).thenReturn(explorer);
-            when(surface.deployExplorer(explorer)).thenReturn(explorer);
+			when(explorerFactory.create(explorerInput)).thenReturn(explorer);
+			when(instructionCollectionFactory.create(instructionInput)).thenReturn(instructions);
+			when(surface.deployExplorer(explorer)).thenReturn(explorer);
 
-            deployedExplorers.add(explorer);
-            instructionsList.add(instructions);
-        }
+			deployedExplorers.add(explorer);
+		}
+		return deployedExplorers;
+	}
+	
+	private List<ExplorerPosition> createExpectedPositions(final Collection<String> expectedResults) {
+		List<ExplorerPosition> expectedPositions = new ArrayList<>();
+		expectedResults.forEach((String result) -> {
+			Scanner scanner = new Scanner(result);
+			ExplorerPosition position = new ExplorerPosition(
+					scanner.nextInt(),
+					scanner.nextInt(),
+					Direction.translate(scanner.next()));
 
-        Collection<ExplorerPosition> expectedPositions = new ArrayList<>();
-        int index = 0;
-        for (String expectedResult : expectedResults) {
-            Scanner scanner = new Scanner(expectedResult);
-            ExplorerPosition position = new ExplorerPosition(
-                    scanner.nextInt(),
-                    scanner.nextInt(),
-                    Direction.translate(scanner.next()));
+			expectedPositions.add(position);
+		});
+		return expectedPositions;
+	}	
+		
+	private void doExpectedExplorerInvocations(List<Explorer> deployedExplorers, List<ExplorerPosition> expectedPositions) {
+		int index = 0;
+		for (Explorer explorer : deployedExplorers) {
+			when(explorer.getCurrentPosition()).thenReturn(expectedPositions.get(index++));
+		}
+	}
 
-            when(deployedExplorers.get(index++).getCurrentPosition()).thenReturn(position);
-            expectedPositions.add(position);
-        }
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullInput() {
+		assertExceptionMessage(null, "Missing Inputs");
+	}
 
-        assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
+	@Test(expected = IllegalArgumentException.class)
+	@SuppressWarnings("serial")
+	public void testMissingExplorerInput() {
+		Collection<String> badInputs = new ArrayList<String>() {{
+			add("5 5");
+		}};
+		assertExceptionMessage(badInputs, "Missing Explorer Inputs");
+	}
 
-        verify(surfaceFactory, times(1)).create(createSurfaceInput);
-        verify(explorerFactory, times(2)).create(anyString());
-        verify(instructionCollectionFactory, times(2)).create(anyString());
-        verify(surface, times(2)).deployExplorer(any(Explorer.class));
-        deployedExplorers.forEach((Explorer item) -> {
-            verify(item).registerInstructions(anyCollectionOf(Instruction.class));
-            verify(item).excuteInstructions(surface);
-            verify(item).getCurrentPosition();
-        });
-    }
+	@Test(expected = IllegalArgumentException.class)
+	@SuppressWarnings("serial")
+	public void testMissingInstructionsInput() {
+		Collection<String> badInputs = new ArrayList<String>() {{
+			add("5 5");
+			add("1 2 Z");
+		}};
+		assertExceptionMessage(badInputs, "Missing Instructions Input");
+	}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNullInput() {
-        assertExceptionMessage(null, "Missing Inputs");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @SuppressWarnings("serial")
-    public void testMissingExplorerInput() {
-        Collection<String> badInputs = new ArrayList<String>() {{
-                add("5 5");
-        }};
-        assertExceptionMessage(badInputs, "Missing Explorer Inputs");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @SuppressWarnings("serial")
-    public void testMissingInstructionsInput() {
-        Collection<String> badInputs = new ArrayList<String>() {{
-                add("5 5");
-                add("1 2 Z");
-        }};
-        assertExceptionMessage(badInputs, "Missing Instructions Input!");
-    }
-
-    private void assertExceptionMessage(Collection<String> badInputs, String expectedMessage) {
-        try {
-            scanEngine.createSurfaceAndScan(badInputs);
-        } catch (Exception ex) {
-            assertThat(ex.getMessage(), equalTo(expectedMessage));
-            throw ex;
-        }
-    }
+	private void assertExceptionMessage(Collection<String> badInputs, String expectedMessage) {
+		try {
+			scanEngine.createSurfaceAndScan(badInputs);
+		} catch (Exception ex) {
+			assertThat(ex.getMessage(), equalTo(expectedMessage));
+			throw ex;
+		}
+	}
 }

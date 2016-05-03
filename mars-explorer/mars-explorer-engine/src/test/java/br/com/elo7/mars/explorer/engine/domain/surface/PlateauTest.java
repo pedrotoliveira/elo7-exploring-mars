@@ -40,8 +40,8 @@ public class PlateauTest extends FixtureTest {
 		System.out.println("scan");
 		ExplorerPosition position = null;
 		Plateau instance = null;
-		ScanResult expResult = null;
-		ScanResult result = instance.scan(position);
+		SurfaceScanResult expResult = null;
+		SurfaceScanResult result = instance.scan(position);
 		assertEquals(expResult, result);
 		fail("The test case is a prototype.");
 	}

@@ -25,7 +25,7 @@ class MarsExplorer implements Explorer {
 	}
 
 	@Override
-	public void registerInstructions(Collection<Instruction> instructions) {
+	public void registerInstructions(Collection<InstructionAction> instructions) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 

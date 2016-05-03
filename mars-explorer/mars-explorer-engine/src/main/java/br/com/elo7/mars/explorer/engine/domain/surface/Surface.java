@@ -24,7 +24,7 @@ public interface Surface {
 	 * Scan a position
 	 *
 	 * @param position
-	 * @return ScanResult
+	 * @return SurfaceScanResult
 	 */
-	ScanResult scan(final ExplorerPosition position);
+	SurfaceScanResult scan(final ExplorerPosition position);
 }

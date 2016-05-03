@@ -3,7 +3,8 @@ package br.com.elo7.mars.explorer.engine.domain.explorer;
 import java.util.Objects;
 
 /**
- *
+ * Represents a Explorer Position in the surface
+ * 
  * @author pedrotoliveira
  */
 public class ExplorerPosition {
@@ -73,8 +74,6 @@ public class ExplorerPosition {
 	
 	@Override
 	public String toString() {
-		return "ExplorerPosition{" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + '}';
+		return "ExplorerPosition[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + ']';
 	}
-	
-	
 }

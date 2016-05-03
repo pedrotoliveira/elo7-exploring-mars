@@ -1,6 +1,7 @@
 package br.com.elo7.mars.explorer.engine.application;
 
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * A Surface Scan Engine
@@ -36,5 +37,5 @@ public interface SurfaceScanEngine {
      * @return A Collection of <code>String</code> represents explorers coordinations
      */
     Collection<String> createSurfaceAndScan(Collection<String> inputs);
-
+	
 }

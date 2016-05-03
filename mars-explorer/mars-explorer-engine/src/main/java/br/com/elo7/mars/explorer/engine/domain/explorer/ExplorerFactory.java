@@ -8,7 +8,8 @@ import java.util.UUID;
 import org.apache.commons.lang.Validate;
 
 /**
- *
+ * Validate a String Input and Create an Explorer.
+ * 
  * @author pedrotoliveira
  */
 public class ExplorerFactory implements Factory<Explorer> {

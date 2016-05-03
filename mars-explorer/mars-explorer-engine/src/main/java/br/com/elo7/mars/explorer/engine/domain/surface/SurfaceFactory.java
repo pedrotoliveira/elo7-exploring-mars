@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.apache.commons.lang.Validate;
 
 /**
- * Encapsulate
+ * Validate a String Input and Create a Surface
  *
  * @author pedrotoliveira
  */

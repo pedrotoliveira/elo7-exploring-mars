@@ -7,10 +7,10 @@ import java.util.Collection;
  *
  * @author pedrotoliveira
  */
-public class InstructionCollectionFactory implements Factory<Collection<Instruction>> {
+public class InstructionCollectionFactory implements Factory<Collection<InstructionAction>> {
 
 	@Override
-	public Collection<Instruction> create(String input) {
+	public Collection<InstructionAction> create(String input) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 	

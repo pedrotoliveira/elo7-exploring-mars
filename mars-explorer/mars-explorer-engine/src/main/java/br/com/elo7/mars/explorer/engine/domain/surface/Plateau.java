@@ -38,7 +38,7 @@ class Plateau implements Surface {
 	}
 
 	@Override
-	public ScanResult scan(ExplorerPosition position) {
+	public SurfaceScanResult scan(ExplorerPosition position) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

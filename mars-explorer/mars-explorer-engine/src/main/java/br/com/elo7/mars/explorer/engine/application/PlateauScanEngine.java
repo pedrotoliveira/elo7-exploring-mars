@@ -2,7 +2,7 @@ package br.com.elo7.mars.explorer.engine.application;
 
 import br.com.elo7.mars.explorer.engine.domain.Factory;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
-import br.com.elo7.mars.explorer.engine.domain.explorer.Instruction;
+import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,11 +18,11 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 
     private final Factory<Surface> surfaceFactory;
     private final Factory<Explorer> explorerFactory;
-    private final Factory<Collection<Instruction>> instructionCollectionFactory;
+    private final Factory<Collection<InstructionAction>> instructionCollectionFactory;
 
     public PlateauScanEngine(Factory<Surface> surfaceFactory,
             Factory<Explorer> explorerFactory,
-            Factory<Collection<Instruction>> instructionCollectionFactory) {
+            Factory<Collection<InstructionAction>> instructionCollectionFactory) {
 
         this.surfaceFactory = surfaceFactory;
         this.explorerFactory = explorerFactory;
@@ -32,14 +32,14 @@ public class PlateauScanEngine implements SurfaceScanEngine {
     @Override
     public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
         Validate.notEmpty(inputs, "Missing Inputs");
-        Iterator<String> inputsIterator = inputs.iterator();
+        Iterator<String> inputsIterator = inputs.iterator();		
         Surface surface = createSurface(inputsIterator.next());
         return moveExplorers(createAndDeployExplorers(inputsIterator, surface), surface);
     }
 
-    private Surface createSurface(String createSurfaceInput) {
-		Validate.notEmpty(createSurfaceInput, "Cannot Find Surface Input!");
-        return surfaceFactory.create(createSurfaceInput);
+    private Surface createSurface(String surfaceInput) {
+		Validate.notEmpty(surfaceInput, "Missing Surface Input");
+        return surfaceFactory.create(surfaceInput);
     }
 
     private Collection<Explorer> createAndDeployExplorers(Iterator<String> inputsIterator, Surface surface) {
@@ -48,7 +48,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
         while (inputsIterator.hasNext()) {
             String createExplorerInput = inputsIterator.next();
 
-            Validate.isTrue(inputsIterator.hasNext(), "Missing Instructions Input!");
+            Validate.isTrue(inputsIterator.hasNext(), "Missing Instructions Input");
             String createInstructionsInput = inputsIterator.next();
 
             deployedExplorers.add(createAndDeployExplorer(createExplorerInput, createInstructionsInput, surface));
@@ -56,10 +56,9 @@ public class PlateauScanEngine implements SurfaceScanEngine {
         return deployedExplorers;
     }
 
-    private Explorer createAndDeployExplorer(String createExplorerInput, String createInstructionsInput, Surface surface) {
-        Explorer explorer = explorerFactory.create(createExplorerInput);
-        Collection<Instruction> instructions = instructionCollectionFactory.create(createInstructionsInput);
-        explorer.registerInstructions(instructions);
+    private Explorer createAndDeployExplorer(String explorerInput, String instructionInput, Surface surface) {
+        Explorer explorer = explorerFactory.create(explorerInput);
+        explorer.registerInstructions(instructionCollectionFactory.create(instructionInput));        
         return surface.deployExplorer(explorer);
     }
 
