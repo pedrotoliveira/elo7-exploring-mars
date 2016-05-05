@@ -6,6 +6,7 @@ import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import org.apache.commons.lang.Validate;
 
 /**
  *
@@ -34,11 +35,15 @@ public class Plateau implements Surface {
 
 	@Override
 	public Explorer deployExplorer(final Explorer explorer) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		ExplorerPosition position = explorer.getCurrentPosition();
+		SurfaceScanResult scanResult = scan(position);
+		//TODO IMPLEMENTAR
+		return null;
 	}
 
 	@Override
 	public SurfaceScanResult scan(ExplorerPosition position) {
+		//TODO IMPLEMENTAR
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
