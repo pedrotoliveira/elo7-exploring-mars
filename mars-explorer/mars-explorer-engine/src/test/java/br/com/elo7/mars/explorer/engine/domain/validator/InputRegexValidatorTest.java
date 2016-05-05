@@ -18,7 +18,7 @@ public class InputRegexValidatorTest {
         try {
             InputRegexValidator.validate(pattern, input);
         } catch (Exception ex) {
-            assertThat(ex.getMessage(), equalTo(InputRegexValidator.ERROR_MESSAGE + input));
+            assertThat(ex.getMessage(), equalTo(InputRegexValidator.ERROR_MESSAGE + input + "\""));
             throw ex;
         }
     }

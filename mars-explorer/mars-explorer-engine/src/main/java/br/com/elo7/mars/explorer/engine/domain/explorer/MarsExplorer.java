@@ -9,7 +9,7 @@ import java.util.UUID;
  *
  * @author pedrotoliveira
  */
-class MarsExplorer implements Explorer {
+public class MarsExplorer implements Explorer {
 
 	private final UUID id;
 	private ExplorerPosition currentPosition;

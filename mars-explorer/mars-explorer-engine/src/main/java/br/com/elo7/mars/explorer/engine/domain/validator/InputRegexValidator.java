@@ -9,14 +9,14 @@ import java.util.regex.Pattern;
  */
 public class InputRegexValidator {
 
-    public static final String ERROR_MESSAGE = "Invalid Input Format! value=";
+    public static final String ERROR_MESSAGE = "Invalid Input Format! value=\"";
 
     private InputRegexValidator() {
     }
 
     public static void validate(String pattern, String input) {
         if (!Pattern.matches(pattern, input)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE + input);
+            throw new IllegalArgumentException(ERROR_MESSAGE + input + "\"");
         }
     }
 }

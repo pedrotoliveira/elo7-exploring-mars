@@ -26,14 +26,14 @@ public class MoveFowardTest {
 		this.currentPosition = currentPosition;
 		this.expectedPosition = expectedPosition;
 	}
-	
+
 	@Parameterized.Parameters(name = "Test Case {index}:")
 	public static Collection<Object[]> testData() {
 		return Arrays.asList(new Object[][]{
 			{new ExplorerPosition(2, 2, Direction.NORTH), new ExplorerPosition(2, 3, Direction.NORTH)},
 			{new ExplorerPosition(2, 2, Direction.SOUTH), new ExplorerPosition(2, 1, Direction.SOUTH)},
 			{new ExplorerPosition(2, 2, Direction.EAST), new ExplorerPosition(3, 2, Direction.EAST)},
-			{new ExplorerPosition(2, 2, Direction.WEST), new ExplorerPosition(1, 2, Direction.WEST)},
+			{new ExplorerPosition(2, 2, Direction.WEST), new ExplorerPosition(1, 2, Direction.WEST)}
 		});
 	}
 

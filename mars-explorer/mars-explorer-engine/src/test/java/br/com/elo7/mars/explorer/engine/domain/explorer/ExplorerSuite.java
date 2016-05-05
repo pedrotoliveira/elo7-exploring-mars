@@ -13,7 +13,12 @@ import org.junit.runners.Suite;
  * @author pedrotoliveira
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({br.com.elo7.mars.explorer.engine.domain.explorer.DirectionTest.class, br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPositionTest.class, br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResultTest.class, br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactoryTest.class, br.com.elo7.mars.explorer.engine.domain.explorer.InstructionTest.class, br.com.elo7.mars.explorer.engine.domain.explorer.InstructionCollectionFactoryTest.class})
+@Suite.SuiteClasses({
+	br.com.elo7.mars.explorer.engine.domain.explorer.DirectionTest.class,
+	br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPositionTest.class,
+	br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactoryTest.class,
+	br.com.elo7.mars.explorer.engine.domain.explorer.InstructionTest.class,
+	br.com.elo7.mars.explorer.engine.domain.explorer.InstructionCollectionFactoryTest.class
+})
 public class ExplorerSuite {
-	
 }

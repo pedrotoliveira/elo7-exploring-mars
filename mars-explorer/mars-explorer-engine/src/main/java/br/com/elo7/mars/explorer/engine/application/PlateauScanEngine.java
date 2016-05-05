@@ -23,7 +23,6 @@ public class PlateauScanEngine implements SurfaceScanEngine {
     public PlateauScanEngine(Factory<Surface> surfaceFactory,
             Factory<Explorer> explorerFactory,
             Factory<Collection<InstructionAction>> instructionCollectionFactory) {
-
         this.surfaceFactory = surfaceFactory;
         this.explorerFactory = explorerFactory;
         this.instructionCollectionFactory = instructionCollectionFactory;

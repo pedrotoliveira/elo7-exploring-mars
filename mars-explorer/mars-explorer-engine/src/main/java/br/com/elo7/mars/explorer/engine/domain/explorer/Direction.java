@@ -26,7 +26,7 @@ public enum Direction {
 		throw new IllegalArgumentException(ERROR_MESSAGE + direction);
 	}
 
-	protected String getDirection() {
+	public String getDirection() {
 		return direction;
 	}
 }

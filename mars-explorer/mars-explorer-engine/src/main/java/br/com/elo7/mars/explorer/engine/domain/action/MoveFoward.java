@@ -2,15 +2,18 @@ package br.com.elo7.mars.explorer.engine.domain.action;
 
 import br.com.elo7.mars.explorer.engine.domain.explorer.Direction;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
+import org.apache.commons.lang.Validate;
 
 /**
- *
+ * Move the Explorer one point forward in the current direction.
+ * 
  * @author pedrotoliveira
  */
 public final class MoveFoward implements MoveAction {
 
 	@Override
-	public ExplorerPosition execute(ExplorerPosition currentPosition) {		
+	public ExplorerPosition execute(ExplorerPosition currentPosition) {
+		Validate.notNull(currentPosition, "CurrentPosition is Null");
 		switch (currentPosition.getDirection()) {
 			case NORTH:
 				return new ExplorerPosition(currentPosition.getxAxis(), currentPosition.getyAxis() + 1, Direction.NORTH);

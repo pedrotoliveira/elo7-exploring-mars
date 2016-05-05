@@ -1,50 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.elo7.mars.explorer.engine.domain.explorer;
 
+import br.com.elo7.mars.explorer.engine.test.FixtureTest;
+import br.com.six2six.fixturefactory.function.impl.RandomFunction;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
- *
+ * ExplorerPosition Unit Tests
+ * 
  * @author pedrotoliveira
  */
-public class ExplorerPositionTest {
+public class ExplorerPositionTest extends FixtureTest {
 	
-	public ExplorerPositionTest() {
-	}
-
 	@Test
-	public void testGetxAxis() {
-		System.out.println("getxAxis");
-		ExplorerPosition instance = null;
-		int expResult = 0;
-		int result = instance.getxAxis();
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
-	}
-
-	@Test
-	public void testGetyAxis() {
-		System.out.println("getyAxis");
-		ExplorerPosition instance = null;
-		int expResult = 0;
-		int result = instance.getyAxis();
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
-	}
-
-	@Test
-	public void testGetDirection() {
-		System.out.println("getDirection");
-		ExplorerPosition instance = null;
-		Direction expResult = null;
-		Direction result = instance.getDirection();
-		assertEquals(expResult, result);
-		fail("The test case is a prototype.");
+	public void getFormmatedPosition() {
+		int xAxis = randomInt(0, 100);
+		int yAxis = randomInt(0, 100);
+		Direction direction = new RandomFunction(Direction.class).generateValue();
+		ExplorerPosition explorerPosition = new ExplorerPosition(xAxis, yAxis, direction);
+		assertThat(explorerPosition.getFormmatedPosition(), equalTo(String.format("%d %d %s", xAxis, yAxis, direction.getDirection())));
 	}
 	
 }
