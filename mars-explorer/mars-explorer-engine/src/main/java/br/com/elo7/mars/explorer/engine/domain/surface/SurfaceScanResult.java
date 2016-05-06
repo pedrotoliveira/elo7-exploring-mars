@@ -1,8 +1,5 @@
 package br.com.elo7.mars.explorer.engine.domain.surface;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Results of a Surface Scan
  *

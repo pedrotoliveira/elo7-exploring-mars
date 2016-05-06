@@ -29,4 +29,9 @@ public enum Direction {
 	public String getDirection() {
 		return direction;
 	}
+
+	@Override
+	public String toString() {
+		return "Direction[" + "direction=" + direction + ']';
+	}
 }

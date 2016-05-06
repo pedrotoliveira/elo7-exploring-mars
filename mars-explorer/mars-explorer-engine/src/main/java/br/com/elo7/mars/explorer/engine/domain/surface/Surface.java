@@ -2,6 +2,7 @@ package br.com.elo7.mars.explorer.engine.domain.surface;
 
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -11,7 +12,13 @@ import java.util.UUID;
  */
 public interface Surface {
 
+	/**
+	 * Get the surface Id
+	 *
+	 * @return
+	 */
 	UUID getId();
+
 	/**
 	 * Deploy a Explorer in the Specified Position
 	 *
@@ -27,4 +34,11 @@ public interface Surface {
 	 * @return SurfaceScanResult
 	 */
 	SurfaceScanResult scan(final ExplorerPosition position);
+
+	/**
+	 * Retrieve a Immutable Collection with a copy of all deployed explorers in the current Surface.
+	 *
+	 * @return a Collection of Explorer
+	 */
+	Collection<Explorer> getDeployedExplorers();
 }

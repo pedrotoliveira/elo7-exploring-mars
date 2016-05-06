@@ -57,6 +57,7 @@ public class PlateauScanEngineTest {
 		List<Explorer> deployedExplorers = createTestExplorers(inputsIterator, surface);
 		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
 		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
+		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
 		
 		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
 
@@ -64,6 +65,7 @@ public class PlateauScanEngineTest {
 		verify(explorerFactory, times(2)).create(anyString());
 		verify(instructionCollectionFactory, times(2)).create(anyString());
 		verify(surface, times(2)).deployExplorer(any(Explorer.class));
+		verify(surface, times(1)).getDeployedExplorers();
 		deployedExplorers.forEach((Explorer explorer) -> {
 			verify(explorer, atLeastOnce()).registerInstructions(anyCollectionOf(InstructionAction.class));
 			verify(explorer, atLeastOnce()).excuteInstructions(surface);
