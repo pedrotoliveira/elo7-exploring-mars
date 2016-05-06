@@ -28,7 +28,7 @@ enum Instruction implements InstructionAction {
 		this.moveAction = moveAction;
 	}
 
-	public static InstructionAction translate(String representation) {
+	public static InstructionAction translate(String representation) {		
 		for (Instruction instruction : values()) {
 			if (instruction.getRepresentation().equals(representation)) {
 				return instruction;
@@ -63,4 +63,9 @@ enum Instruction implements InstructionAction {
 	private ExecutionResult failedExecutionResult(ExplorerPosition currentPosition, SurfaceScanResult scanResult) {
 		return new ExecutionResult(this, false, currentPosition, currentPosition).addNotification(scanResult.getMessage());
 	}
+		
+	@Override
+	public String toString() {
+		return "Instruction[" + "representation=" + representation + ']';
+	}	
 }

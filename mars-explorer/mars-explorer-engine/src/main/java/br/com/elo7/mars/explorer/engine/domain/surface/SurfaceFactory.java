@@ -16,7 +16,7 @@ public class SurfaceFactory implements Factory<Surface> {
 
     @Override
     public Surface create(String input) {
-        Validate.notNull(input, "Surface Input Is Null");
+        Validate.notNull(input, "Surface Input is Null");
         InputRegexValidator.validate("^\\d{0,10}\\s\\d{0,10}$", input);
         Scanner scanner = new Scanner(input);
         int xAxis = scanner.nextInt();
