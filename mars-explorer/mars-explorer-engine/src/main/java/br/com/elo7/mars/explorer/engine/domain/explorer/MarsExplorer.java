@@ -1,11 +1,13 @@
 package br.com.elo7.mars.explorer.engine.domain.explorer;
 
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
+import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -18,11 +20,13 @@ class MarsExplorer implements Explorer {
 	private UUID id;
 	private ExplorerPosition currentPosition;
 	private Collection<InstructionAction> registeredInstructions;
+	private Collection<ExecutionResult> executionResults;
 
 	public MarsExplorer(UUID id, int xAxis, int yAxis, Direction direction) {
 		this.id = id;
 		this.currentPosition = new ExplorerPosition(xAxis, yAxis, direction);
 		this.registeredInstructions = new ArrayList<>();
+		this.executionResults = new ArrayList<>();
 	}
 
 	@Override
@@ -30,10 +34,14 @@ class MarsExplorer implements Explorer {
 		return this.id;
 	}
 
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	@Override
 	public Explorer registerInstructions(Collection<InstructionAction> instructions) {
 		Validate.notEmpty(instructions, "Instructions is Null or Empty");
-		registeredInstructions.addAll(instructions);
+		getRegisteredInstructions().addAll(instructions);
 		return this;
 	}
 
@@ -42,17 +50,41 @@ class MarsExplorer implements Explorer {
 		return currentPosition;
 	}
 
+	public void setCurrentPosition(ExplorerPosition currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
 	@Override
 	public Collection<ExecutionResult> excuteInstructions(Surface surface) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		Validate.notNull(surface, "Surface is Null");
+		Validate.notEmpty(getRegisteredInstructions(), "No instructions registered, invoke registerInstructions first");
+
+		getRegisteredInstructions().forEach(
+				(instructionAction) -> {
+					ExplorerPosition currentPosition = getCurrentPosition();
+					ExecutionResult executionResult = instructionAction.execute(currentPosition, surface.scan(currentPosition));
+					setCurrentPosition(executionResult.getFinalPosition());
+					getExecutionResults().add(executionResult);
+				}
+		);
+		return getExecutionResults();
 	}
 	
+	public Collection<ExecutionResult> getExecutionResults() {
+		if (executionResults == null) {
+			this.executionResults = new ArrayList<>();
+		}
+		return executionResults;
+	}
+
+	public void setExecutionResults(Collection<ExecutionResult> executionResults) {
+		this.executionResults = executionResults;
+	}
+
 	public Collection<InstructionAction> getRegisteredInstructions() {
 		if (registeredInstructions == null) {
 			this.registeredInstructions = new ArrayList<>();
 		}
-		//Comparação da Unmodified Quebra o teste.
-		//return Collections.unmodifiableCollection(registeredInstructions);
 		return registeredInstructions;
 	}
 
@@ -87,5 +119,13 @@ class MarsExplorer implements Explorer {
 			return false;
 		}
 		return true;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "MarsExplorer [" + "id=" + id
+				+ ", currentPosition=" + currentPosition
+				+ ", registeredInstructions=" + registeredInstructions
+				+ ", executionResults=" + executionResults + ']';
+	}
 }

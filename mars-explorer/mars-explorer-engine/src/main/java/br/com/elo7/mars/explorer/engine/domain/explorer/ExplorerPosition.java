@@ -4,11 +4,11 @@ import java.util.Objects;
 
 /**
  * Represents a Explorer Position in the surface
- * 
+ *
  * @author pedrotoliveira
  */
 public class ExplorerPosition {
-	
+
 	private final int xAxis;
 	private final int yAxis;
 	private final Direction direction;
@@ -17,6 +17,13 @@ public class ExplorerPosition {
 		this.xAxis = xAxis;
 		this.yAxis = yAxis;
 		this.direction = direction;
+	}
+
+	public static ExplorerPosition copyFrom(ExplorerPosition explorerPosition) {
+		return new ExplorerPosition(
+				explorerPosition.getxAxis(),
+				explorerPosition.getyAxis(),
+				explorerPosition.getDirection());
 	}
 
 	public int getxAxis() {
@@ -30,7 +37,7 @@ public class ExplorerPosition {
 	public Direction getDirection() {
 		return direction;
 	}
-	
+
 	public String getDirectionAsString() {
 		return direction.getDirection();
 	}
@@ -71,7 +78,7 @@ public class ExplorerPosition {
 	public String getFormmatedPosition() {
 		return String.format("%d %d %s", getxAxis(), getyAxis(), getDirectionAsString());
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ExplorerPosition[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + ']';
