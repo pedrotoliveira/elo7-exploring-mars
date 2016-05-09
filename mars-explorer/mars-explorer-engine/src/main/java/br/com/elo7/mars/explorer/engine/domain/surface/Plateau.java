@@ -61,7 +61,7 @@ class Plateau implements Surface {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
+	
 	@Override
 	public String getId() {
 		return id;
@@ -69,6 +69,11 @@ class Plateau implements Surface {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String getSurfaceDimension() {
+		return String.format("( %d , %d )", getxAxis(), getyAxis());
 	}
 
 	@Override

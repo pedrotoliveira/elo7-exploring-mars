@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A Plateau Surface Scan Engine.
@@ -25,7 +26,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	private final Factory<Explorer> explorerFactory;
 	private final Factory<Collection<InstructionAction>> instructionCollectionFactory;
 	private final SurfaceRepository surfaceRepository;
-	
+
 	@Autowired
 	public PlateauScanEngine(Factory<Surface> surfaceFactory,
 			Factory<Explorer> explorerFactory,
@@ -36,8 +37,9 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 		this.instructionCollectionFactory = instructionCollectionFactory;
 		this.surfaceRepository = surfaceRepository;
 	}
-	
+
 	@Override
+	@Transactional
 	public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
 		Validate.notEmpty(inputs, "Missing Inputs");
 		Iterator<String> inputsIterator = inputs.iterator();
@@ -45,9 +47,24 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 		return moveExplorers(createAndDeployExplorers(inputsIterator, surface));
 	}
 
-	private Surface createSurface(String surfaceInput) {
+	@Override
+	@Transactional
+	public Surface createSurface(String surfaceInput) {
 		Validate.notEmpty(surfaceInput, "Missing Surface Input");
-		return surfaceFactory.create(surfaceInput);
+		Surface surface = surfaceFactory.create(surfaceInput);
+		return surfaceRepository.save(surface);
+	}
+
+	@Override
+	@Transactional
+	public Surface deployExplorers(String surfaceId, Collection<String> explorerInputs) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	@Transactional
+	public Collection<String> scan(String surfaceId) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	private Surface createAndDeployExplorers(Iterator<String> inputsIterator, Surface surface) {
@@ -76,7 +93,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 		return results;
 	}
 
-	public Consumer<Explorer> executeInstructionsAndFillResults(Surface surface, Collection<String> results) {
+	private Consumer<Explorer> executeInstructionsAndFillResults(Surface surface, Collection<String> results) {
 		return (explorer) -> {
 			explorer.excuteInstructions(surface);
 			results.add(explorer.getCurrentPosition().getFormmatedPosition());

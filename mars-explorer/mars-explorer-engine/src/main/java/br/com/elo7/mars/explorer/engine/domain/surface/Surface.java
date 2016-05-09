@@ -3,6 +3,7 @@ package br.com.elo7.mars.explorer.engine.domain.surface;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -18,6 +19,19 @@ public interface Surface {
 	 * @return
 	 */
 	String getId();
+	
+	/**
+	 * Get the surface Dimension.
+	 * 
+	 * @return The surface dimension in the format: ( xAxis, yAxis)
+	 */
+	String getSurfaceDimension();
+	
+	/**
+	 * 
+	 * @return created date.
+	 */
+	Date getCreatedDate();
 
 	/**
 	 * Deploy a Explorer in the Specified Position

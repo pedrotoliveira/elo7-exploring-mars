@@ -22,6 +22,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -61,6 +62,7 @@ public class PlateauScanEngineTest {
 		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
 		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
 		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
+		when(surfaceRepository.save(surface)).thenReturn(surface);
 		
 		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
 
@@ -173,5 +175,20 @@ public class PlateauScanEngineTest {
 			assertThat(ex.getMessage(), equalTo(expectedMessage));
 			throw ex;
 		}
+	}
+	
+	@Test
+	public void testCreateSurface() {
+		fail("To Implement");
+	}
+	
+	@Test
+	public void testDeployExplorers() {
+		fail("To Implement");
+	}
+	
+	@Test
+	public void testScan() {
+		fail("To Implement");
 	}
 }

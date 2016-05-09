@@ -84,6 +84,7 @@ class MarsExplorer implements Explorer {
 		this.executionResults = executionResults;
 	}
 
+	@Override
 	public Collection<InstructionAction> getRegisteredInstructions() {
 		if (registeredInstructions == null) {
 			this.registeredInstructions = new ArrayList<>();
