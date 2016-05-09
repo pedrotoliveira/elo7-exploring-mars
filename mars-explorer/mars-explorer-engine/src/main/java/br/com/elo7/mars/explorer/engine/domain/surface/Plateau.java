@@ -4,11 +4,14 @@ import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Predicate;
 import org.apache.commons.lang.Validate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import static br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult.COLLISION;
 import static br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult.OK;
@@ -19,30 +22,58 @@ import static br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult.
  *
  * @author pedrotoliveira
  */
+@Document(collection = "surface")
 class Plateau implements Surface {
 
 	public static final String ALREDY_DEPLOYED = "Alredy deployed";
-	
-	private UUID id;
+
+	@Id
+	private String mongoId;
+	private Date createdDate;
+	private String id;
 	private int xAxis;
 	private int yAxis;
 	private List<Explorer> deployedExplorers;
 
+	public Plateau() {
+	}
+
 	public Plateau(final UUID id, int xAxis, int yAxis) {
-		this.id = id;
+		this.id = id.toString();
 		this.xAxis = xAxis;
 		this.yAxis = yAxis;
+		this.createdDate = new Date();
 		this.deployedExplorers = new ArrayList<>();
 	}
 
+	public String getMongoId() {
+		return mongoId;
+	}
+
+	public void setMongoId(String mongoId) {
+		this.mongoId = mongoId;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	@Override
-	public UUID getId() {
+	public String getId() {
 		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override
 	public Explorer deployExplorer(final Explorer explorer) {
-		SurfaceScanResult scanResult = scan(explorer.getCurrentPosition());
+		SurfaceScanResult scanResult = scan(explorer);
 		Validate.isTrue(OK.equals(scanResult), createDeployErrorMessage(explorer, scanResult.getMessage()));
 		Validate.isTrue(notDeployed(explorer), createDeployErrorMessage(explorer, ALREDY_DEPLOYED));
 		deployedExplorers.add(explorer);
@@ -59,23 +90,34 @@ class Plateau implements Surface {
 	}
 
 	@Override
-	public SurfaceScanResult scan(final ExplorerPosition position) {
-		if (isPositionOutOfBoundary(position)) {
+	public SurfaceScanResult scan(final Explorer explorer) {
+		if (isPositionOutOfBoundary(explorer)) {
 			return OUT_OF_BOUNDARY;
 		}
-		if (isCollisionPosition(position)) {
+		if (isCollisionPosition(explorer)) {
 			return COLLISION;
 		}
 		return OK;
 	}
 
-	private boolean isPositionOutOfBoundary(final ExplorerPosition position) {
+	private boolean isPositionOutOfBoundary(final Explorer explorer) {
+		ExplorerPosition position = explorer.getCurrentPosition();
 		return (position.getxAxis() > getxAxis() || position.getyAxis() > getyAxis());
 	}
 
-	private boolean isCollisionPosition(final ExplorerPosition position) {
-		Predicate<ExplorerPosition> samePosition = (explorerPosition) -> explorerPosition.equals(position);
-		return getDeployedExplorers().stream().map((explorer) -> explorer.getCurrentPosition()).anyMatch(samePosition);
+	private boolean isCollisionPosition(final Explorer explorer) {
+		Predicate<Explorer> collisionDetected = (deployed) -> {
+			return isNotSameId(deployed, explorer) && isSamePosition(deployed, explorer);
+		};
+		return getDeployedExplorers().stream().anyMatch(collisionDetected);
+	}
+	
+	private boolean isNotSameId(final Explorer deployed, final Explorer explorer) {
+		return !(deployed.getId().equals(explorer.getId()));
+	}
+	
+	private boolean isSamePosition(final Explorer deployed, final Explorer explorer) {
+		return deployed.getCurrentPosition().equals(explorer.getCurrentPosition());
 	}
 
 	public int getxAxis() {

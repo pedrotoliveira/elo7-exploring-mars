@@ -4,31 +4,39 @@ import br.com.elo7.mars.explorer.engine.domain.Factory;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
+import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * A Plateau Surface Scan Engine.
  *
  * @author pedrotoliveira
  */
+@Service
 public class PlateauScanEngine implements SurfaceScanEngine {
 
 	private final Factory<Surface> surfaceFactory;
 	private final Factory<Explorer> explorerFactory;
 	private final Factory<Collection<InstructionAction>> instructionCollectionFactory;
-
+	private final SurfaceRepository surfaceRepository;
+	
+	@Autowired
 	public PlateauScanEngine(Factory<Surface> surfaceFactory,
 			Factory<Explorer> explorerFactory,
-			Factory<Collection<InstructionAction>> instructionCollectionFactory) {
+			Factory<Collection<InstructionAction>> instructionCollectionFactory,
+			SurfaceRepository surfaceRepository) {
 		this.surfaceFactory = surfaceFactory;
 		this.explorerFactory = explorerFactory;
 		this.instructionCollectionFactory = instructionCollectionFactory;
+		this.surfaceRepository = surfaceRepository;
 	}
-
+	
 	@Override
 	public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
 		Validate.notEmpty(inputs, "Missing Inputs");
@@ -64,6 +72,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	private Collection<String> moveExplorers(Surface surface) {
 		Collection<String> results = new ArrayList<>();
 		surface.getDeployedExplorers().forEach(executeInstructionsAndFillResults(surface, results));
+		surfaceRepository.save(surface);
 		return results;
 	}
 

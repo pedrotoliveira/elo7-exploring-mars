@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public interface Explorer {
 	
-	UUID getId();	
+	String getId();	
 	/**
 	 * 
 	 * @param instructions 

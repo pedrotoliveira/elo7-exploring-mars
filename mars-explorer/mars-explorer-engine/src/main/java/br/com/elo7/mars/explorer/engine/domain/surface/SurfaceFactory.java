@@ -6,12 +6,14 @@ import br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator;
 import java.util.Scanner;
 import java.util.UUID;
 import org.apache.commons.lang.Validate;
+import org.springframework.stereotype.Component;
 
 /**
  * Validate a String Input and Create a Surface
  *
  * @author pedrotoliveira
  */
+@Component
 public class SurfaceFactory implements Factory<Surface> {
 
     @Override

@@ -14,7 +14,6 @@ import org.junit.BeforeClass;
  */
 public abstract class FixtureTest {
 
-
     @BeforeClass
     public static void setUpFixtures() {
         Class<?> currentClass = MethodHandles.lookup().lookupClass();

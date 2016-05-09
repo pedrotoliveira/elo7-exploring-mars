@@ -3,14 +3,16 @@ package br.com.elo7.mars.explorer.engine.domain.explorer;
 import br.com.elo7.mars.explorer.engine.domain.Factory;
 import br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import org.apache.commons.lang.Validate;
+import org.springframework.stereotype.Component;
 
 /**
+ * InstructionCollection Factory.
  *
  * @author pedrotoliveira
  */
+@Component
 public class InstructionCollectionFactory implements Factory<Collection<InstructionAction>> {
 
 	@Override
@@ -23,5 +25,4 @@ public class InstructionCollectionFactory implements Factory<Collection<Instruct
 		}
 		return instructions;
 	}
-
 }

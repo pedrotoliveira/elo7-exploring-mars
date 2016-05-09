@@ -12,7 +12,6 @@ import static br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition.
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ public class MarsExplorerTest extends FixtureTest {
 	@Test
 	public void testGetId() {
 		UUID id = randomUUID();
-		assertThat(validExplorer(id).getId(), equalTo(id));
+		assertThat(validExplorer(id).getId(), equalTo(id.toString()));
 	}
 
 	private MarsExplorer validExplorer(UUID id) {
@@ -98,7 +97,7 @@ public class MarsExplorerTest extends FixtureTest {
 		explorer.registerInstructions(instructions);
 
 		Surface surface = mock(Surface.class);
-		when(surface.scan(any(ExplorerPosition.class))).thenReturn(SurfaceScanResult.OK);
+		when(surface.scan(explorer)).thenReturn(SurfaceScanResult.OK);
 
 		Collection<ExecutionResult> expectedResults = new ArrayList<>();
 		ExplorerPosition currentPosition = copyFrom(explorer.getCurrentPosition());
@@ -110,6 +109,6 @@ public class MarsExplorerTest extends FixtureTest {
 		}
 
 		assertThat(explorer.excuteInstructions(surface), equalTo(expectedResults));
-		verify(surface, times(instructions.size())).scan(any(ExplorerPosition.class));
+		verify(surface, times(instructions.size())).scan(explorer);
 	}
 }

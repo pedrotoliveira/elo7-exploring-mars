@@ -17,7 +17,7 @@ public interface Surface {
 	 *
 	 * @return
 	 */
-	UUID getId();
+	String getId();
 
 	/**
 	 * Deploy a Explorer in the Specified Position
@@ -33,7 +33,7 @@ public interface Surface {
 	 * @param position
 	 * @return SurfaceScanResult
 	 */
-	SurfaceScanResult scan(final ExplorerPosition position);
+	SurfaceScanResult scan(final Explorer position);
 
 	/**
 	 * Retrieve a Immutable Collection with a copy of all deployed explorers in the current Surface.

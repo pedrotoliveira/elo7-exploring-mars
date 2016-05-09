@@ -6,6 +6,7 @@ import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
+import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -40,10 +41,12 @@ public class PlateauScanEngineTest {
 	private Factory<Explorer> explorerFactory;
 	@Mock
 	private Factory<Collection<InstructionAction>> instructionCollectionFactory;
+	@Mock
+	private SurfaceRepository surfaceRepository;
 
 	@Before
 	public void setUp() {
-		this.scanEngine = new PlateauScanEngine(surfaceFactory, explorerFactory, instructionCollectionFactory);
+		this.scanEngine = new PlateauScanEngine(surfaceFactory, explorerFactory, instructionCollectionFactory, surfaceRepository);
 	}
 
 	@Test
@@ -66,6 +69,7 @@ public class PlateauScanEngineTest {
 		verify(instructionCollectionFactory, times(2)).create(anyString());
 		verify(surface, times(2)).deployExplorer(any(Explorer.class));
 		verify(surface, times(1)).getDeployedExplorers();
+		verify(surfaceRepository, atLeastOnce()).save(surface);
 		deployedExplorers.forEach((Explorer explorer) -> {
 			verify(explorer, atLeastOnce()).registerInstructions(anyCollectionOf(InstructionAction.class));
 			verify(explorer, atLeastOnce()).excuteInstructions(surface);

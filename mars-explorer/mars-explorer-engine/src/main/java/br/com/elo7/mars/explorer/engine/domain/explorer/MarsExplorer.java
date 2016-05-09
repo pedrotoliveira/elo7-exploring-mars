@@ -17,24 +17,27 @@ import org.apache.commons.lang.Validate;
  */
 class MarsExplorer implements Explorer {
 
-	private UUID id;
+	private String id;
 	private ExplorerPosition currentPosition;
 	private Collection<InstructionAction> registeredInstructions;
 	private Collection<ExecutionResult> executionResults;
 
+	public MarsExplorer() {
+	}
+	
 	public MarsExplorer(UUID id, int xAxis, int yAxis, Direction direction) {
-		this.id = id;
+		this.id = id.toString();
 		this.currentPosition = new ExplorerPosition(xAxis, yAxis, direction);
 		this.registeredInstructions = new ArrayList<>();
 		this.executionResults = new ArrayList<>();
 	}
 
 	@Override
-	public UUID getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -60,9 +63,9 @@ class MarsExplorer implements Explorer {
 		Validate.notEmpty(getRegisteredInstructions(), "No instructions registered, invoke registerInstructions first");
 
 		getRegisteredInstructions().forEach(
-				(instructionAction) -> {
-					ExplorerPosition currentPosition = getCurrentPosition();
-					ExecutionResult executionResult = instructionAction.execute(currentPosition, surface.scan(currentPosition));
+				(instructionAction) -> {					
+					SurfaceScanResult scanResult = surface.scan(this);
+					ExecutionResult executionResult = instructionAction.execute(currentPosition, scanResult);
 					setCurrentPosition(executionResult.getFinalPosition());
 					getExecutionResults().add(executionResult);
 				}
