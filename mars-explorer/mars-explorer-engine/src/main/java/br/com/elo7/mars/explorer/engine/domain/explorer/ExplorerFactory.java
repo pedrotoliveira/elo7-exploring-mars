@@ -25,6 +25,6 @@ public class ExplorerFactory implements Factory<Explorer> {
         int yAxis = scanner.nextInt();
         CoordinateValidator.validate(xAxis, yAxis);
         Direction direction = Direction.translate(scanner.next());
-        return new MarsExplorer(UUID.randomUUID(), xAxis, yAxis, direction);
+        return new MarsExplorer(UUID.randomUUID().toString(), xAxis, yAxis, direction);
 	}
 }

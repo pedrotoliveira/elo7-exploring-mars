@@ -28,7 +28,7 @@ enum Instruction implements InstructionAction {
 		this.moveAction = moveAction;
 	}
 
-	public static InstructionAction translate(String representation) {		
+	public static InstructionAction translate(String representation) {
 		for (Instruction instruction : values()) {
 			if (instruction.getRepresentation().equals(representation)) {
 				return instruction;
@@ -46,13 +46,18 @@ enum Instruction implements InstructionAction {
 	}
 
 	@Override
+	public ExplorerPosition predictPosition(ExplorerPosition currentPosition) {
+		return getMoveAction().execute(currentPosition);
+	}
+
+	@Override
 	public ExecutionResult execute(ExplorerPosition currentPosition, SurfaceScanResult scanResult) {
 		Validate.notNull(scanResult, "Provide a Surface Scan Result");
 		switch (scanResult) {
 			case COLLISION:
 				return failedExecutionResult(currentPosition, scanResult);
 			case OUT_OF_BOUNDARY:
-				return failedExecutionResult(currentPosition, scanResult);				
+				return failedExecutionResult(currentPosition, scanResult);
 			case OK:
 				return new ExecutionResult(this, true, currentPosition, moveAction.execute(currentPosition));
 			default:
@@ -63,9 +68,9 @@ enum Instruction implements InstructionAction {
 	private ExecutionResult failedExecutionResult(ExplorerPosition currentPosition, SurfaceScanResult scanResult) {
 		return new ExecutionResult(this, false, currentPosition, currentPosition).addNotification(scanResult.getMessage());
 	}
-		
+
 	@Override
 	public String toString() {
 		return "Instruction[" + "representation=" + representation + ']';
-	}	
+	}
 }

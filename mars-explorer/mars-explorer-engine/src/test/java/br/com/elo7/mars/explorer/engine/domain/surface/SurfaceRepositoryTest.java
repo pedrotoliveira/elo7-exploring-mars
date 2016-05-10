@@ -30,18 +30,18 @@ public class SurfaceRepositoryTest extends FixtureTest {
 	public void testCRUD() {
 		Plateau plateau = validPlateau();
 		Surface surface = surfaceRepository.save(plateau);
-		Surface surfaceFinded = surfaceRepository.findOne(plateau.getMongoId());
+		Surface surfaceFinded = surfaceRepository.findOne(plateau.getId());
 		assertThat(surface, equalTo(surfaceFinded));
 		
 		plateau.setxAxis(randomInt(100, 200));
 		surface = surfaceRepository.save(plateau);
-		surfaceFinded = surfaceRepository.findOne(plateau.getMongoId());
+		surfaceFinded = surfaceRepository.findOne(plateau.getId());
 		assertThat(surface, equalTo(surfaceFinded));
 		
-		surfaceRepository.delete(plateau.getMongoId());
+		surfaceRepository.delete(plateau.getId());
 	}
 
 	private Plateau validPlateau() {
-		return new Plateau(randomUUID(), 100, 100);
+		return new Plateau(randomUUID().toString(), 100, 100);
 	}
 }

@@ -31,12 +31,12 @@ public class PlateauTest extends FixtureTest {
 	
 	@Test
 	public void testGetId() {
-		UUID id = randomUUID();
-		assertThat(new Plateau(id, 10, 10).getId(), equalTo(id.toString()));
+		String id = randomUUID().toString();
+		assertThat(new Plateau(id, 10, 10).getId(), equalTo(id));
 	}
 
 	private Plateau validPlateau() {
-		return new Plateau(randomUUID(), 100, 100);
+		return new Plateau(randomUUID().toString(), 100, 100);
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class PlateauTest extends FixtureTest {
 		Plateau plateau = validPlateau();
 		ExplorerPosition explorerPosition = new ExplorerPosition(randomInt(101, 1000), randomInt(101, 1000), Direction.NORTH);
 		when(explorer.getCurrentPosition()).thenReturn(explorerPosition);
-		assertThat(plateau.scan(explorer), equalTo(SurfaceScanResult.OUT_OF_BOUNDARY));
+		assertThat(plateau.scan(explorer, explorerPosition), equalTo(SurfaceScanResult.OUT_OF_BOUNDARY));
 	}
 	
 	@Test
@@ -61,10 +61,10 @@ public class PlateauTest extends FixtureTest {
 		when(other.getCurrentPosition()).thenReturn(explorerPosition);	
 				
 		List<Explorer> deployedExplorers = new ArrayList<>();
-		deployedExplorers.add(other);		
+		deployedExplorers.add(other);
 		plateau.setDeployedExplorers(deployedExplorers);
 		
-		assertThat(plateau.scan(explorer), equalTo(SurfaceScanResult.COLLISION));
+		assertThat(plateau.scan(explorer, explorerPosition), equalTo(SurfaceScanResult.COLLISION));
 	}
 	
 	@Test
@@ -72,7 +72,7 @@ public class PlateauTest extends FixtureTest {
 		Plateau plateau = validPlateau();		
 		ExplorerPosition explorerPosition = new ExplorerPosition(1, 1, Direction.NORTH);
 		when(explorer.getCurrentPosition()).thenReturn(explorerPosition);
-		assertThat(plateau.scan(explorer), equalTo(SurfaceScanResult.OK));
+		assertThat(plateau.scan(explorer, explorerPosition), equalTo(SurfaceScanResult.OK));
 	}
 
 	@Test

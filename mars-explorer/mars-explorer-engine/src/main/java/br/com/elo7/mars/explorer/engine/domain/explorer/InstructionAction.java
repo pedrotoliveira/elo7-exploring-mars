@@ -7,8 +7,15 @@ import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
  * 
  * @author pedrotoliveira
  */
-@FunctionalInterface
 public interface InstructionAction {
+	
+	/**
+	 * Predict a future position for this action.
+	 * 
+	 * @param currentPosition
+	 * @return future position
+	 */
+	ExplorerPosition predictPosition(ExplorerPosition currentPosition);
 	
 	/**
 	 * Execute a Instruction based on a current ExplorerPosition and a SurfaceScanResult.

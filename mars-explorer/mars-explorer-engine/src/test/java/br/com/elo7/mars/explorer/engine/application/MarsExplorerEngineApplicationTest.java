@@ -22,6 +22,6 @@ public class MarsExplorerEngineApplicationTest {
 	
 	@Test
 	public void testRun() throws Exception {		
-		application.run("5 5", "1 2 N", "LMLMLMLMM", "3 3 E", "MMRMMRMRRM");
+		application.run("5 5", "1 2 N", "LMLMLMLMM", "3 3 E", "MMRMMRMRRM", "2 2 S", "MMMMMMMMLMMMMMMMRMMMMMMM");
 	}
 }

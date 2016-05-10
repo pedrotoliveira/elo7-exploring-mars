@@ -4,10 +4,7 @@ import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
-import java.util.UUID;
-import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -25,8 +22,8 @@ class MarsExplorer implements Explorer {
 	public MarsExplorer() {
 	}
 	
-	public MarsExplorer(UUID id, int xAxis, int yAxis, Direction direction) {
-		this.id = id.toString();
+	public MarsExplorer(String id, int xAxis, int yAxis, Direction direction) {
+		this.id = id;
 		this.currentPosition = new ExplorerPosition(xAxis, yAxis, direction);
 		this.registeredInstructions = new ArrayList<>();
 		this.executionResults = new ArrayList<>();
@@ -35,10 +32,6 @@ class MarsExplorer implements Explorer {
 	@Override
 	public String getId() {
 		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	@Override
@@ -63,8 +56,9 @@ class MarsExplorer implements Explorer {
 		Validate.notEmpty(getRegisteredInstructions(), "No instructions registered, invoke registerInstructions first");
 
 		getRegisteredInstructions().forEach(
-				(instructionAction) -> {					
-					SurfaceScanResult scanResult = surface.scan(this);
+				(instructionAction) -> {
+					ExplorerPosition futurePosition = instructionAction.predictPosition(currentPosition);
+					SurfaceScanResult scanResult = surface.scan(this, futurePosition);
 					ExecutionResult executionResult = instructionAction.execute(currentPosition, scanResult);
 					setCurrentPosition(executionResult.getFinalPosition());
 					getExecutionResults().add(executionResult);

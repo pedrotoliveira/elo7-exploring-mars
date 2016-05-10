@@ -36,18 +36,20 @@ public interface Surface {
 	/**
 	 * Deploy a Explorer in the Specified Position
 	 *
-	 * @param
-	 * @return
+	 * @param Explorer to be deployed
+	 * @return deployed Explorer
 	 */
 	Explorer deployExplorer(final Explorer explorer);
 
 	/**
-	 * Scan a position
+	 * Scan a Position
 	 *
-	 * @param position
+	 * @param explorer current explorer
+	 * @param position to be scanned
+	 * 
 	 * @return SurfaceScanResult
 	 */
-	SurfaceScanResult scan(final Explorer position);
+	SurfaceScanResult scan(final Explorer explorer, ExplorerPosition position);
 
 	/**
 	 * Retrieve a Immutable Collection with a copy of all deployed explorers in the current Surface.

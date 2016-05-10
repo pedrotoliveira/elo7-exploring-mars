@@ -24,6 +24,6 @@ public class SurfaceFactory implements Factory<Surface> {
         int xAxis = scanner.nextInt();
         int yAxis = scanner.nextInt();
         CoordinateValidator.validate(xAxis, yAxis);
-        return new Plateau(UUID.randomUUID(), xAxis, yAxis);
+        return new Plateau(UUID.randomUUID().toString(), xAxis, yAxis);
     }
 }

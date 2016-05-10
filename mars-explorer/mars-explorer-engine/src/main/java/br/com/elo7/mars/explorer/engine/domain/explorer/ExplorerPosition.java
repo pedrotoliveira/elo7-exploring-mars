@@ -1,5 +1,6 @@
 package br.com.elo7.mars.explorer.engine.domain.explorer;
 
+import br.com.elo7.mars.explorer.engine.domain.validator.CoordinateValidator;
 import java.util.Objects;
 
 /**

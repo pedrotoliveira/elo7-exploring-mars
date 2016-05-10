@@ -12,6 +12,8 @@ import static br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition.
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,7 +35,7 @@ public class MarsExplorerTest extends FixtureTest {
 	}
 
 	private MarsExplorer validExplorer(UUID id) {
-		return new MarsExplorer(id, randomInt(0, 100), randomInt(0, 100), Direction.NORTH);
+		return new MarsExplorer(id.toString(), randomInt(0, 100), randomInt(0, 100), Direction.NORTH);
 	}
 
 	@Test
@@ -42,7 +44,7 @@ public class MarsExplorerTest extends FixtureTest {
 		int xAxis = randomInt(0, 100);
 		int yAxis = randomInt(0, 100);
 		Direction direction = Direction.EAST;
-		Explorer explorer = new MarsExplorer(id, xAxis, yAxis, direction);
+		Explorer explorer = new MarsExplorer(id.toString(), xAxis, yAxis, direction);
 		assertThat(explorer.getCurrentPosition(), equalTo(new ExplorerPosition(xAxis, yAxis, direction)));
 	}
 
@@ -95,9 +97,9 @@ public class MarsExplorerTest extends FixtureTest {
 		MarsExplorer explorer = validExplorer();
 		Collection<InstructionAction> instructions = instructionFactory.create(validInput());
 		explorer.registerInstructions(instructions);
-
-		Surface surface = mock(Surface.class);
-		when(surface.scan(explorer)).thenReturn(SurfaceScanResult.OK);
+				
+		Surface surface = mock(Surface.class);		
+		when(surface.scan(eq(explorer), any(ExplorerPosition.class))).thenReturn(SurfaceScanResult.OK);
 
 		Collection<ExecutionResult> expectedResults = new ArrayList<>();
 		ExplorerPosition currentPosition = copyFrom(explorer.getCurrentPosition());
@@ -107,8 +109,8 @@ public class MarsExplorerTest extends FixtureTest {
 			currentPosition = result.getFinalPosition();
 			expectedResults.add(result);
 		}
-
+		
 		assertThat(explorer.excuteInstructions(surface), equalTo(expectedResults));
-		verify(surface, times(instructions.size())).scan(explorer);
+		verify(surface, times(instructions.size())).scan(eq(explorer), any(ExplorerPosition.class));
 	}
 }
