@@ -39,7 +39,6 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	}
 
 	@Override
-	@Transactional
 	public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
 		Validate.notEmpty(inputs, "Missing Inputs");
 		Iterator<String> inputsIterator = inputs.iterator();
@@ -48,7 +47,6 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	}
 
 	@Override
-	@Transactional
 	public Surface createSurface(String surfaceInput) {
 		Validate.notEmpty(surfaceInput, "Missing Surface Input");
 		Surface surface = surfaceFactory.create(surfaceInput);
@@ -56,15 +54,18 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	}
 
 	@Override
-	@Transactional
 	public Surface deployExplorers(String surfaceId, Collection<String> explorerInputs) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		Validate.notEmpty(surfaceId, "Missing Surface Id");
+		Validate.notEmpty(explorerInputs, "Missing Explorers Inputs");
+		Surface surface = surfaceRepository.findOne(surfaceId);
+		return createAndDeployExplorers(explorerInputs.iterator(), surface);
 	}
 
 	@Override
-	@Transactional
 	public Collection<String> scan(String surfaceId) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		Validate.notEmpty(surfaceId, "Missing Surface Id");
+		Surface surface = surfaceRepository.findOne(surfaceId);
+		return moveExplorers(surface);
 	}
 
 	private Surface createAndDeployExplorers(Iterator<String> inputsIterator, Surface surface) {
@@ -77,7 +78,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 
 			createAndDeployExplorer(createExplorerInput, createInstructionsInput, surface);
 		}
-		return surface;
+		return surfaceRepository.save(surface);
 	}
 
 	private Explorer createAndDeployExplorer(String explorerInput, String instructionInput, Surface surface) {

@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -178,21 +179,75 @@ public class PlateauScanEngineTest {
 		}
 	}
 	
-	@Test
-	@Ignore
+	@Test	
 	public void testCreateSurface() {
-		fail("To Implement");
+		String surfaceInput  = "10 10";
+		Surface surface = mock(Surface.class);
+		when(surfaceFactory.create(surfaceInput)).thenReturn(surface);
+		when(surfaceRepository.save(surface)).thenReturn(surface);
+		
+		assertThat(scanEngine.createSurface(surfaceInput), equalTo(surface));
+		
+		verify(surfaceFactory, times(1)).create(surfaceInput);
+		verify(surfaceRepository, times(1)).save(surface);
 	}
 	
-	@Test
-	@Ignore
+	@Test	
 	public void testDeployExplorers() {
-		fail("To Implement");
+		String surfaceId = UUID.randomUUID().toString();
+		Collection<String> explorerInputs = new ArrayList<String>() {{			
+			add("1 2 N");
+			add("LMLMLMLMM");
+			add("3 3 E");
+			add("MMRMMRMRRM");
+		}};
+		
+		Surface surface = mock(Surface.class);
+		when(surfaceRepository.findOne(surfaceId)).thenReturn(surface);		
+		List<Explorer> deployedExplorers = createTestExplorers(explorerInputs.iterator(), surface);
+		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
+		when(surfaceRepository.save(surface)).thenReturn(surface);
+		
+		assertThat(scanEngine.deployExplorers(surfaceId, explorerInputs), equalTo(surface));
+		
+		verify(surfaceRepository, atLeastOnce()).findOne(surfaceId);
+		verify(explorerFactory, times(2)).create(anyString());
+		verify(instructionCollectionFactory, times(2)).create(anyString());
+		verify(surface, times(2)).deployExplorer(any(Explorer.class));		
+		verify(surfaceRepository, atLeastOnce()).save(surface);
+		deployedExplorers.forEach((Explorer explorer) -> {
+			verify(explorer, atLeastOnce()).registerInstructions(anyCollectionOf(InstructionAction.class));
+		});
 	}
 	
 	@Test
-	@Ignore
-	public void testScan() {
-		fail("To Implement");
+	public void testScan() {				
+		String surfaceId = UUID.randomUUID().toString();
+		Collection<String> expectedResults = createExpectedResult();
+		
+		Surface surface = mock(Surface.class);
+		when(surfaceRepository.findOne(surfaceId)).thenReturn(surface);
+		
+		Collection<String> explorerInputs = new ArrayList<String>() {{			
+			add("1 2 N");
+			add("LMLMLMLMM");
+			add("3 3 E");
+			add("MMRMMRMRRM");
+		}};
+		
+		List<Explorer> deployedExplorers = createTestExplorers(explorerInputs.iterator(), surface);
+		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
+		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
+		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
+		when(surfaceRepository.save(surface)).thenReturn(surface);
+		
+		assertThat(scanEngine.scan(surfaceId), equalTo(expectedResults));
+		
+		verify(surface, times(1)).getDeployedExplorers();
+		verify(surfaceRepository, atLeastOnce()).save(surface);
+		deployedExplorers.forEach((Explorer explorer) -> {			
+			verify(explorer, atLeastOnce()).excuteInstructions(surface);
+			verify(explorer, atLeastOnce()).getCurrentPosition();
+		});
 	}
 }

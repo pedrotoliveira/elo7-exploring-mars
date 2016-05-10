@@ -34,9 +34,6 @@ class Plateau implements Surface {
 	private int yAxis;
 	private List<Explorer> deployedExplorers;
 
-	public Plateau() {
-	}
-
 	@PersistenceConstructor
 	public Plateau(String id, int xAxis, int yAxis) {
 		this.id = id;
