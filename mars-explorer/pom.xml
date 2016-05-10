@@ -18,7 +18,6 @@
 
 	<modules>
 		<module>mars-explorer-engine</module>
-		<module>mars-explorer-gui</module>
 		<module>mars-explorer-api</module>
 	</modules>
 

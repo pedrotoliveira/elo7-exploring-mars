@@ -43,6 +43,7 @@ class Plateau implements Surface {
 		this.deployedExplorers = new ArrayList<>();
 	}
 
+	@Override
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -54,11 +55,6 @@ class Plateau implements Surface {
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String getSurfaceDimension() {
-		return String.format("( %d , %d )", getxAxis(), getyAxis());
 	}
 
 	@Override
@@ -112,6 +108,7 @@ class Plateau implements Surface {
 		return deployedPosition.equals(position);
 	}
 
+	@Override
 	public int getxAxis() {
 		return xAxis;
 	}
@@ -120,6 +117,7 @@ class Plateau implements Surface {
 		this.xAxis = xAxis;
 	}
 
+	@Override
 	public int getyAxis() {
 		return yAxis;
 	}

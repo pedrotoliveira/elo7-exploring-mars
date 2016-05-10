@@ -19,16 +19,23 @@ public interface Surface {
 	 * @return
 	 */
 	String getId();
-	
+
 	/**
-	 * Get the surface Dimension.
-	 * 
-	 * @return The surface dimension in the format: ( xAxis, yAxis)
+	 * Get Surface X Axis
+	 *
+	 * @return X Axis
 	 */
-	String getSurfaceDimension();
-	
+	int getxAxis();
+
 	/**
-	 * 
+	 * Get Surface Y Axis
+	 *
+	 * @return Y Axis
+	 */
+	int getyAxis();
+
+	/**
+	 *
 	 * @return created date.
 	 */
 	Date getCreatedDate();
@@ -46,7 +53,7 @@ public interface Surface {
 	 *
 	 * @param explorer current explorer
 	 * @param position to be scanned
-	 * 
+	 *
 	 * @return SurfaceScanResult
 	 */
 	SurfaceScanResult scan(final Explorer explorer, ExplorerPosition position);
