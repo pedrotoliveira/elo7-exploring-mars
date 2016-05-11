@@ -12,33 +12,38 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan("br.com.elo7.mars.explorer")
+@EnableMongoRepositories("br.com.elo7.mars.explorer.engine.domain.surface")
 public class MarsExplorerApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MarsExplorerApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MarsExplorerApiApplication.class, args);
+    }
 
-	@Bean
-	public Docket newsApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("br.com.elo7")
-				.apiInfo(apiInfo())
-				.select()
-				.paths(regex("/api/*"))
-				.build();
-	}
+    @Bean
+    public Docket newsApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("localhost")
+                .apiInfo(apiInfo())
+                .select()
+                .paths(regex("mars-explorer/api.*"))
+                .build()
+                .enableUrlTemplating(true)
+                .forCodeGeneration(true);
+    }
 
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-				.title("Elo7 Mars Explorer API")
-				.description("Elo7 Mars Explorer API - Teste de Programa\u00E7\u00E3o Elo7")
-				.contact("Pedro T. Oliveira - pedro.oliveira20@gmail.com")
-				.license("Apache License Version 2.0")
-				.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
-				.version("2.0")
-				.build();
-	}
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Elo7 Mars Explorer API")
+                .description("Elo7 Mars Explorer API - Teste de Programa\u00E7\u00E3o Elo7")
+                .contact("Pedro T. Oliveira - pedro.oliveira20@gmail.com")
+                .license("Apache License Version 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
+                .version("2.0")
+                .build();
+    }
 }

@@ -4,22 +4,29 @@ import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 
 /**
  * Instruction Action.
- * 
+ *
  * @author pedrotoliveira
  */
 public interface InstructionAction {
-	
+
+    /**
+     * Instruction Representation
+     *
+     * @return representation
+     */
+    String getRepresentation();
+
 	/**
 	 * Predict a future position for this action.
-	 * 
+	 *
 	 * @param currentPosition
 	 * @return future position
 	 */
 	ExplorerPosition predictPosition(ExplorerPosition currentPosition);
-	
+
 	/**
 	 * Execute a Instruction based on a current ExplorerPosition and a SurfaceScanResult.
-	 * 
+	 *
 	 * @param currentPosition ExplorerPosition
 	 * @param scanResult SurfaceScanResult
 	 * @return ExecutionResult - holds execution information.
@@ -27,5 +34,5 @@ public interface InstructionAction {
 	 * @see SurfaceScanResult
 	 */
 	ExecutionResult execute(ExplorerPosition currentPosition, SurfaceScanResult scanResult);
-	
+
 }

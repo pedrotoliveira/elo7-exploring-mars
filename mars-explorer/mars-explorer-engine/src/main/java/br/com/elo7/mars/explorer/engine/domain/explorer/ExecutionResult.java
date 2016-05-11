@@ -17,7 +17,7 @@ public class ExecutionResult {
 	private final String status;
 	private final ExplorerPosition startPosition;
 	private final ExplorerPosition finalPosition;
-	private List<String> notifications;
+	private final List<String> notifications;
 
 	public ExecutionResult(Instruction instruction,
 			boolean success,
@@ -30,8 +30,8 @@ public class ExecutionResult {
 		this.notifications = new ArrayList<>();
 	}
 
-	public Instruction getInstruction() {
-		return instruction;
+	public String getInstruction() {
+		return instruction.toString();
 	}
 
 	public String getStatus() {

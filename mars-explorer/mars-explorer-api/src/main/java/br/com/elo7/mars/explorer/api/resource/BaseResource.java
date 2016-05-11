@@ -1,9 +1,5 @@
 package br.com.elo7.mars.explorer.api.resource;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.hateoas.Link;
-
 /**
  * Base Resource
  *
@@ -11,15 +7,18 @@ import org.springframework.hateoas.Link;
  */
 public abstract class BaseResource {
 
-	private List<Link> links = new ArrayList<>();
+    /**
+     * Endpoint Class that expose this resource.
+     *
+     * @return Endpoint Class
+     */
+    public abstract Class<?> getEndpointClass();
 
-	public List<Link> getLinks() {
-		return links;
-	}
+    /**
+     * Link Relation to this Resource
+     *
+     * @return Link relation
+     */
+    public abstract String getRel();
 
-	public void setLinks(List<Link> links) {
-		this.links = links;
-	}
-	
-	public abstract Class<?> getEndpointClass();
 }

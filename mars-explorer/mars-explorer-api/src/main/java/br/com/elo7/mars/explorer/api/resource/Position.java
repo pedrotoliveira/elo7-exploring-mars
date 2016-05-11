@@ -12,82 +12,106 @@ import javax.validation.constraints.NotNull;
  */
 @ApiModel(description = "The Explorer Position")
 public class Position {
-		
-	@JsonProperty("xAxis")
-	@ApiModelProperty(required = true, value = "X Axis position in the current surface")
-	@NotNull
-	private Integer xAxis;
-	
-	@JsonProperty("yAxis")
-	@ApiModelProperty(required = true, value = "Y Axis position in the current Surface")
-	@NotNull
-	private Integer yAxis;
 
-	public Position() {
-	}
+    @JsonProperty("xAxis")
+    @ApiModelProperty(required = true, value = "X Axis position in the current surface")
+    @NotNull
+    private Integer xAxis;
 
-	public Position(Integer xAxis, Integer yAxis) {
-		this.xAxis = xAxis;
-		this.yAxis = yAxis;
-	}
+    @JsonProperty("yAxis")
+    @ApiModelProperty(required = true, value = "Y Axis position in the current Surface")
+    @NotNull
+    private Integer yAxis;
 
-	public Position xAxis(Integer xAxis) {
-		this.xAxis = xAxis;
-		return this;
-	}
+    @JsonProperty("direction")
+    @ApiModelProperty(required = true, value = "Explorer Direction")
+    @NotNull
+    private String direction;
 
-	public Position yAxis(Integer yAxis) {
-		this.yAxis = yAxis;
-		return this;
-	}
+    public Position() {
+    }
 
-	public Integer getxAxis() {
-		return xAxis;
-	}
+    public Position(Integer xAxis, Integer yAxis, String direction) {
+        this.xAxis = xAxis;
+        this.yAxis = yAxis;
+        this.direction = direction;
+    }
 
-	public void setxAxis(Integer xAxis) {
-		this.xAxis = xAxis;
-	}
+    public Position xAxis(Integer xAxis) {
+        this.xAxis = xAxis;
+        return this;
+    }
 
-	public Integer getyAxis() {
-		return yAxis;
-	}
+    public Position yAxis(Integer yAxis) {
+        this.yAxis = yAxis;
+        return this;
+    }
 
-	public void setyAxis(Integer yAxis) {
-		this.yAxis = yAxis;
-	}
+    public Position direction(String direction) {
+        this.direction = direction;
+        return this;
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 29 * hash + Objects.hashCode(this.xAxis);
-		hash = 29 * hash + Objects.hashCode(this.yAxis);
-		return hash;
-	}
+    public Integer getxAxis() {
+        return xAxis;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Position other = (Position) obj;
-		if (!Objects.equals(this.xAxis, other.xAxis)) {
-			return false;
-		}
-		if (!Objects.equals(this.yAxis, other.yAxis)) {
-			return false;
-		}
-		return true;
-	}
+    public void setxAxis(Integer xAxis) {
+        this.xAxis = xAxis;
+    }
 
-	@Override
-	public String toString() {
-		return "Position[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ']';
-	}
+    public Integer getyAxis() {
+        return yAxis;
+    }
+
+    public void setyAxis(Integer yAxis) {
+        this.yAxis = yAxis;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.xAxis);
+        hash = 79 * hash + Objects.hashCode(this.yAxis);
+        hash = 79 * hash + Objects.hashCode(this.direction);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Position other = (Position) obj;
+        if (!Objects.equals(this.direction, other.direction)) {
+            return false;
+        }
+        if (!Objects.equals(this.xAxis, other.xAxis)) {
+            return false;
+        }
+        if (!Objects.equals(this.yAxis, other.yAxis)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Position[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + ']';
+    }
+
 }

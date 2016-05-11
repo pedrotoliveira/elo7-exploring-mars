@@ -37,6 +37,7 @@ enum Instruction implements InstructionAction {
 		throw new IllegalArgumentException(ERROR_MESSAGE + representation);
 	}
 
+    @Override
 	public String getRepresentation() {
 		return representation;
 	}
@@ -69,8 +70,4 @@ enum Instruction implements InstructionAction {
 		return new ExecutionResult(this, false, currentPosition, currentPosition).addNotification(scanResult.getMessage());
 	}
 
-	@Override
-	public String toString() {
-		return "Instruction[" + "representation=" + representation + ']';
-	}
 }
