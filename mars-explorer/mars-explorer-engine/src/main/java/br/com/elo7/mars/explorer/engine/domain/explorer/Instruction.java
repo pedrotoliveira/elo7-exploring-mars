@@ -7,12 +7,15 @@ import br.com.elo7.mars.explorer.engine.domain.action.TurnRight;
 import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 import org.apache.commons.lang.Validate;
 
+import static br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResult.FAILED_STATUS;
+import static br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResult.SUCCESS_STATUS;
+
 /**
  * Explorer Instructions
  *
  * @author pedrotoliveira
  */
-enum Instruction implements InstructionAction {
+public enum Instruction implements InstructionAction {
 
 	TURN_LEFT("L", new TurnLeft()),
 	TURN_RIGHT("R", new TurnRight()),
@@ -42,7 +45,7 @@ enum Instruction implements InstructionAction {
 		return representation;
 	}
 
-	public MoveAction getMoveAction() {
+	public MoveAction getMoveAction() {		
 		return moveAction;
 	}
 
@@ -60,14 +63,14 @@ enum Instruction implements InstructionAction {
 			case OUT_OF_BOUNDARY:
 				return failedExecutionResult(currentPosition, scanResult);
 			case OK:
-				return new ExecutionResult(this, true, currentPosition, moveAction.execute(currentPosition));
+				return new ExecutionResult(this, SUCCESS_STATUS, currentPosition, moveAction.execute(currentPosition));
 			default:
-				return new ExecutionResult(this, true, currentPosition, currentPosition).addNotification("Nothing Done");
+				return new ExecutionResult(this, SUCCESS_STATUS, currentPosition, currentPosition).addNotification("Nothing Done");
 		}
 	}
 
 	private ExecutionResult failedExecutionResult(ExplorerPosition currentPosition, SurfaceScanResult scanResult) {
-		return new ExecutionResult(this, false, currentPosition, currentPosition).addNotification(scanResult.getMessage());
+		return new ExecutionResult(this, FAILED_STATUS, currentPosition, currentPosition).addNotification(scanResult.getMessage());
 	}
 
 }

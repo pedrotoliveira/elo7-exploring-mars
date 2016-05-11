@@ -1,11 +1,9 @@
 package br.com.elo7.mars.explorer.engine.domain.surface;
 
-import br.com.elo7.mars.explorer.engine.application.MarsExplorerEngineApplication;
-import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
+import br.com.elo7.mars.explorer.engine.bootstrap.MarsExplorerEngineApplication;
 import br.com.elo7.mars.explorer.engine.test.FixtureTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

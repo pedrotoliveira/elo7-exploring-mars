@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A Plateau Surface Scan Engine.

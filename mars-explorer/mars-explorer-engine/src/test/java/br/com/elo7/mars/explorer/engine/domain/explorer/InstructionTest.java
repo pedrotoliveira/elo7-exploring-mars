@@ -15,6 +15,8 @@ import br.com.elo7.mars.explorer.engine.domain.action.TurnLeft;
 import br.com.elo7.mars.explorer.engine.domain.action.TurnRight;
 import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 
+import static br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResult.SUCCESS_STATUS;
+
 /**
  * Instruction UnitTests
  * 
@@ -46,17 +48,17 @@ public class InstructionTest {
 			{"M",
 				Instruction.MOVE_FOWARD,
 				new MoveFoward(),
-				new ExecutionResult(Instruction.MOVE_FOWARD, true, startPosition, new ExplorerPosition(0, 1, Direction.NORTH))
+				new ExecutionResult(Instruction.MOVE_FOWARD, SUCCESS_STATUS, startPosition, new ExplorerPosition(0, 1, Direction.NORTH))
 			},
 			{"L",
 				Instruction.TURN_LEFT,
 				new TurnLeft(),
-				new ExecutionResult(Instruction.TURN_LEFT, true, startPosition, new ExplorerPosition(0, 0, Direction.WEST))
+				new ExecutionResult(Instruction.TURN_LEFT, SUCCESS_STATUS, startPosition, new ExplorerPosition(0, 0, Direction.WEST))
 			},				
 			{"R",
 				Instruction.TURN_RIGHT,
 				new TurnRight(),
-				new ExecutionResult(Instruction.TURN_RIGHT, true, startPosition, new ExplorerPosition(0, 0, Direction.EAST))
+				new ExecutionResult(Instruction.TURN_RIGHT, SUCCESS_STATUS, startPosition, new ExplorerPosition(0, 0, Direction.EAST))
 			}
 		});
 	}

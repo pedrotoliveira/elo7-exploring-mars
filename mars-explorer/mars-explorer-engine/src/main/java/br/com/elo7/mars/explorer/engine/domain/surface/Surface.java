@@ -4,7 +4,6 @@ import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import java.util.Collection;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * The surface is the Area that a Explorer can be Deployed or Move in.
@@ -43,7 +42,7 @@ public interface Surface {
 	/**
 	 * Deploy a Explorer in the Specified Position
 	 *
-	 * @param Explorer to be deployed
+	 * @param explorer a explorer to deploy
 	 * @return deployed Explorer
 	 */
 	Explorer deployExplorer(final Explorer explorer);

@@ -4,6 +4,7 @@ package br.com.elo7.mars.explorer.engine.domain;
  * Abstract Factory.
  * 
  * @author pedrotoliveira
+ * @param <Entity>
  */
 public interface Factory<Entity> {
 	

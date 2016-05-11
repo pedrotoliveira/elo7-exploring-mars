@@ -2,7 +2,6 @@ package br.com.elo7.mars.explorer.engine.application;
 
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * A Surface Scan Engine

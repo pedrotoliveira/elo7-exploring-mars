@@ -12,6 +12,9 @@ import java.util.Objects;
  * @author pedrotoliveira
  */
 public class ExecutionResult {
+	
+	public static final String SUCCESS_STATUS = "Success";
+	public static final String FAILED_STATUS = "Failed";
 
 	private final Instruction instruction;
 	private final String status;
@@ -20,17 +23,17 @@ public class ExecutionResult {
 	private final List<String> notifications;
 
 	public ExecutionResult(Instruction instruction,
-			boolean success,
+			String status,
 			ExplorerPosition startPosition,
 			ExplorerPosition finalPosition) {
 		this.instruction = instruction;
-		this.status = success ? "Success" : "Fail";
+		this.status = status;
 		this.startPosition = startPosition;
 		this.finalPosition = finalPosition;
 		this.notifications = new ArrayList<>();
 	}
 
-	public String getInstruction() {
+	public String getInstructionRepresentation() {
 		return instruction.toString();
 	}
 
