@@ -1,20 +1,13 @@
 package br.com.elo7.mars.explorer.api.resource;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-/**
- * Error
- **/
+import java.util.Objects;
 
 @ApiModel(description = "Error")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2016-05-10T01:31:07.119Z")
 public class Error   {
   
   private Integer code = null;
@@ -118,52 +111,5 @@ public class Error   {
     this.notifications = notifications;
   }
 
-  
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Error error = (Error) o;
-    return Objects.equals(code, error.code) &&
-        Objects.equals(description, error.description) &&
-        Objects.equals(id, error.id) &&
-        Objects.equals(message, error.message) &&
-        Objects.equals(notifications, error.notifications);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(code, description, id, message, notifications);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    notifications: ").append(toIndentedString(notifications)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

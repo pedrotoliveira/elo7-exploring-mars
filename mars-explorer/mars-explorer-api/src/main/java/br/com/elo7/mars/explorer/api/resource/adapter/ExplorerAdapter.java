@@ -55,7 +55,7 @@ public class ExplorerAdapter implements ResourceAdapter<Explorer, ExplorerResour
                     .startPosition(result.getStartPosition())
                     .finalPosition(result.getFinalPosition())
                     .status(result.getStatus())
-                    .instruction(result.getInstruction())
+                    .instruction(result.getInstructionRepresentation())
                     .notifications(result.getNotifications());
 
             executionResultResources.add(executionResultResource);

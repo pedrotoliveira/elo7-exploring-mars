@@ -41,11 +41,11 @@ public class SurfaceResource extends BaseResource {
 
     @JsonProperty("deployedExplorers")
     @ApiModelProperty(value = "The Deployed Explorers")
-    private List<ExplorerResource> deployedExplorers = new ArrayList<ExplorerResource>();
+    private List<ExplorerResource> deployedExplorers = new ArrayList<>();
 
     @JsonProperty("errors")
     @ApiModelProperty(value = "Errors")
-    private List<Error> errors = new ArrayList<Error>();
+    private List<Error> errors = new ArrayList<>();
 
     public SurfaceResource id(String id) {
         this.id = id;

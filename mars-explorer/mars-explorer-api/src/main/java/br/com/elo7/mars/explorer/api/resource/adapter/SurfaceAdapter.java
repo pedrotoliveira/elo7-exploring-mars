@@ -61,7 +61,8 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
                     .linkTo(surfaceResource.getEndpointClass())
                     .slash(surfaceResource.getId())
                     .withRel(surfaceResource.getRel());
-
+						
+			surfaceResource.deployedExplorers(explorerAdapter.map(domain.getDeployedExplorers()));
             surfaceResources.add(surfaceResource);
             links.add(link);
         });
