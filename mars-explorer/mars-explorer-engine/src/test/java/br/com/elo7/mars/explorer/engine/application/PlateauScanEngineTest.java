@@ -14,17 +14,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyCollectionOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 /**
  *
@@ -249,5 +249,15 @@ public class PlateauScanEngineTest {
 			verify(explorer, atLeastOnce()).excuteInstructions(surface);
 			verify(explorer, atLeastOnce()).getCurrentPosition();
 		});
+	}
+	
+	@Test
+	public void testDelete() {
+		String surfaceId = UUID.randomUUID().toString();
+		Surface surface = mock(Surface.class);		
+		when(surfaceRepository.findOne(surfaceId)).thenReturn(surface);
+		scanEngine.deleteSurface(surfaceId);
+		verify(surfaceRepository, times(1)).findOne(surfaceId);
+		verify(surfaceRepository, times(1)).delete(surface);
 	}
 }

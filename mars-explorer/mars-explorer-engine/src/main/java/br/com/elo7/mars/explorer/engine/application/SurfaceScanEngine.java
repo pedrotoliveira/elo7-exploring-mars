@@ -47,6 +47,13 @@ public interface SurfaceScanEngine {
 	Surface createSurface(String surfaceInput);
 	
 	/**
+	 * Delete a Surface
+	 * 
+	 * @param surfaceId the surface id (UUID)
+	 */
+	void deleteSurface(String surfaceId);
+	
+	/**
 	 * Parse the inputs and create and deploys a collection of explorers in a surface.
 	 * 
 	 * <blockquote><pre>

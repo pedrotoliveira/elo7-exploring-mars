@@ -15,7 +15,7 @@ import org.springframework.hateoas.jaxrs.JaxRsLinkBuilder;
 import org.springframework.stereotype.Component;
 
 /**
- * Surface Adapter
+ * Surface Adapter Resource
  *
  * @author pedrotoliveira
  */

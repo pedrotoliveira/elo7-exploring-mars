@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Path("/explorer")
-@Api(description = "Explorer Resource")
+@Api(value = "Explorer Resource", description = "Explorer Resource", produces = "application/json")
 public class ExplorerEndpoint {
 
 }

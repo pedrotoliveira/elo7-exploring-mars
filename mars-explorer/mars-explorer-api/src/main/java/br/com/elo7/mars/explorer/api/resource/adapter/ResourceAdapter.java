@@ -9,6 +9,8 @@ import org.springframework.hateoas.Resources;
  * Generic Adapter Interface
  *
  * @author pedrotoliveira
+ * @param <Domain> domain object
+ * @param <T> resource
  */
 public interface ResourceAdapter<Domain, T extends BaseResource> {
 
@@ -45,8 +47,7 @@ public interface ResourceAdapter<Domain, T extends BaseResource> {
     /**
      * Adapt a Domain Collection to a Resource Collection
      *
-     * @param domain
-     *
+	 * @param domainCollection
      * @return Resources
      */
     Resources<T> adaptAll(Collection<Domain> domainCollection);

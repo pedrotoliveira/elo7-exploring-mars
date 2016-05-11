@@ -1,6 +1,5 @@
 package br.com.elo7.mars.explorer.api.bootstrap;
 
-import br.com.elo7.mars.explorer.api.bootstrap.MarsExplorerApiApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;

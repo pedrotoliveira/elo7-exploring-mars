@@ -24,7 +24,7 @@ public class UnhandledExceptionMapper implements ExceptionMapper<Exception> {
 		logger.info("Unexpected Exception", exception);
 		return Response
 				.status(Response.Status.INTERNAL_SERVER_ERROR)
-				.entity("deu algum erro muito doido!")
+				.entity("Oops! We Have A Problem.")
 				.type(MediaType.APPLICATION_JSON)
 				.build();
 	}

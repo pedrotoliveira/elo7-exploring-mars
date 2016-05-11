@@ -99,4 +99,12 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 			results.add(explorer.getCurrentPosition().getFormmatedPosition());
 		};
 	}
+
+	@Override
+	public void deleteSurface(String surfaceId) {
+		Validate.notEmpty(surfaceId, "Missing Surface Id");
+		Surface surface = surfaceRepository.findOne(surfaceId);
+		Validate.notNull(surface, "Surface Don't exists");
+		surfaceRepository.delete(surface);
+	}
 }

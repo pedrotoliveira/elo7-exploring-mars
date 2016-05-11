@@ -30,42 +30,42 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Path("surfaces")
-@Api(description = "The Surfaces Collections", produces = "application/json")
+@Api(value = "Surfaces Collections", description = "The Surfaces Collections", produces = "application/json")
 public class SurfacesEndpoint {
 
-    @Autowired
-    private SurfaceRepository surfaceRepository;
-    @Autowired
-    private ResourceAdapter<Surface, SurfaceResource> adapter;
+	@Autowired
+	private SurfaceRepository surfaceRepository;
+	@Autowired
+	private ResourceAdapter<Surface, SurfaceResource> adapter;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Retrieve Created Surfaces", notes = "Retrieve Created Surfaces", nickname = "get")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "OK", response = Collection.class),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Failure")
-    })
-    public Response get(
-            @ApiParam(value = "Max Results Per Page") @QueryParam("max") @DefaultValue("20") Integer max,
-            @ApiParam(value = "Page") @QueryParam("page") @DefaultValue("0") Integer page) {
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Retrieve Created Surfaces", notes = "Retrieve Created Surfaces", nickname = "get")
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Collection.class),
+		@ApiResponse(code = 204, message = "No Content"),
+		@ApiResponse(code = 500, message = "Failure")
+	})
+	public Response get(
+			@ApiParam(value = "Max Results Per Page") @QueryParam("max") @DefaultValue("20") Integer max,
+			@ApiParam(value = "Page") @QueryParam("page") @DefaultValue("0") Integer page) {
 
-        PageRequest pageRequest = new PageRequest(page, max);
-        Page<Surface> surfaceCollection = surfaceRepository.findAll(pageRequest);
+		PageRequest pageRequest = new PageRequest(page, max);
+		Page<Surface> surfaceCollection = surfaceRepository.findAll(pageRequest);
 
-        if (surfaceCollection.hasContent()) {
-            Resources<SurfaceResource> resources = adapter.adaptAll(surfaceCollection.getContent());
-            return Response.ok(resources).build();
-        } else {
-            return Response.ok().build();
-        }
-    }
+		if (surfaceCollection.hasContent()) {
+			Resources<SurfaceResource> resources = adapter.adaptAll(surfaceCollection.getContent());
+			return Response.ok(resources).build();
+		} else {
+			return Response.noContent().build();
+		}
+	}
 
-    public void setSurfaceRepository(SurfaceRepository surfaceRepository) {
-        this.surfaceRepository = surfaceRepository;
-    }
+	public void setSurfaceRepository(SurfaceRepository surfaceRepository) {
+		this.surfaceRepository = surfaceRepository;
+	}
 
-    public void setAdapter(ResourceAdapter<Surface, SurfaceResource> adapter) {
-        this.adapter = adapter;
-    }
+	public void setAdapter(ResourceAdapter<Surface, SurfaceResource> adapter) {
+		this.adapter = adapter;
+	}
 }

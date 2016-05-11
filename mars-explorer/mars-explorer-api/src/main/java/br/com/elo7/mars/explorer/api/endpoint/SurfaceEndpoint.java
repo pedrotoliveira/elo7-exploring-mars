@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Path("/surface")
-@Api(description = "Surface Resource")
+@Api(value = "Surface Resource", description = "Surface Resource", produces = "application/json")
 public class SurfaceEndpoint {	
 }
