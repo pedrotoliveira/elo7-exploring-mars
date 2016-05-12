@@ -1,14 +1,20 @@
 package br.com.elo7.mars.explorer.api.resource;
 
 import br.com.elo7.mars.explorer.api.endpoint.SurfaceEndpoint;
-import java.util.Objects;
+import br.com.elo7.mars.explorer.api.resource.json.DateTimeJsonSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 
 /**
  * SurfaceResource Resource
@@ -16,149 +22,139 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "surface")
 public class SurfaceResource extends BaseResource {
 
-    @Override
-    public Class<?> getEndpointClass() {
-        return SurfaceEndpoint.class;
-    }
+	private static final long serialVersionUID = 6438815192131169412L;
 
-    @Override
-    public String getRel() {
-        return "surface";
-    }
+	@Override
+	public Class<?> getEndpointClass() {
+		return SurfaceEndpoint.class;
+	}
 
-    @JsonProperty("id")
-    @ApiModelProperty(value = "UUID Representing a Created Surface")
-    private String id;
+	@Override
+	public String getRel() {
+		return "surface";
+	}
 
-    @JsonProperty("dimension")
-    @ApiModelProperty(required = true, value = "The Surface Dimension")
-    @NotNull
-    private Dimension dimension;
+	@Override
+	public Resource<SurfaceResource> buildResource(Link... links) {
+		return new Resource<>(this, links);
+	}
 
-    @JsonProperty("createdDate")
-    @ApiModelProperty(value = "The Creation Date")
-    private Date createdDate;
+	@Override
+	public Resource<SurfaceResource> buildResource(List<Link> links) {
+		return new Resource<>(this, links);
+	}
 
-    @JsonProperty("deployedExplorers")
-    @ApiModelProperty(value = "The Deployed Explorers")
-    private List<ExplorerResource> deployedExplorers = new ArrayList<>();
+	@JsonProperty("id")
+	@ApiModelProperty(value = "UUID of Created Surface")
+	private String id;
 
-    @JsonProperty("errors")
-    @ApiModelProperty(value = "Errors")
-    private List<Error> errors = new ArrayList<>();
+	@JsonProperty("dimension")
+	@ApiModelProperty(required = true, value = "Surface Dimension")
+	@NotNull
+	private Dimension dimension;
 
-    public SurfaceResource id(String id) {
-        this.id = id;
-        return this;
-    }
+	@JsonProperty("createdDate")
+	@ApiModelProperty(value = "Creation Date")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	@JsonSerialize(using = DateTimeJsonSerializer.class)
+	private DateTime createdDate;
 
-    public SurfaceResource dimension(Dimension dimension) {
-        this.dimension = dimension;
-        return this;
-    }
+	@JsonProperty("deployedExplorers")
+	@ApiModelProperty(value = "Deployed Explorers")
+	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+	private Resources<ExplorerResource> deployedExplorers;
 
-    public SurfaceResource createdDate(Date createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
+	public SurfaceResource id(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public SurfaceResource deployedExplorers(List<ExplorerResource> deployedExplorers) {
-        this.deployedExplorers = deployedExplorers;
-        return this;
-    }
+	public SurfaceResource dimension(Dimension dimension) {
+		this.dimension = dimension;
+		return this;
+	}
 
-    public SurfaceResource errors(List<Error> errors) {
-        this.errors = errors;
-        return this;
-    }
+	public SurfaceResource createdDate(Date createdDate) {
+		this.createdDate = new DateTime(createdDate.getTime());
+		return this;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public SurfaceResource deployedExplorers(Resources<ExplorerResource> deployedExplorers) {
+		this.deployedExplorers = deployedExplorers;
+		return this;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public Dimension getDimension() {
-        return dimension;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
-    }
+	public Dimension getDimension() {
+		return dimension;
+	}
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+	public void setDimension(Dimension dimension) {
+		this.dimension = dimension;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public DateTime getCreatedDate() {
+		return createdDate;
+	}
 
-    public List<ExplorerResource> getDeployedExplorers() {
-        return deployedExplorers;
-    }
+	public void setCreatedDate(DateTime createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public void setDeployedExplorers(List<ExplorerResource> deployedExplorers) {
-        this.deployedExplorers = deployedExplorers;
-    }
+	public Resources<ExplorerResource> getDeployedExplorers() {
+		return deployedExplorers;
+	}
 
-    public List<Error> getErrors() {
-        return errors;
-    }
+	public void setDeployedExplorers(Resources<ExplorerResource> deployedExplorers) {
+		this.deployedExplorers = deployedExplorers;
+	}
 
-    public void setErrors(List<Error> errors) {
-        this.errors = errors;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 97 * hash + Objects.hashCode(this.id);
+		hash = 97 * hash + Objects.hashCode(this.dimension);		
+		hash = 97 * hash + Objects.hashCode(this.deployedExplorers);
+		return hash;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.dimension);
-        hash = 97 * hash + Objects.hashCode(this.createdDate);
-        hash = 97 * hash + Objects.hashCode(this.deployedExplorers);
-        hash = 97 * hash + Objects.hashCode(this.errors);
-        return hash;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final SurfaceResource other = (SurfaceResource) obj;
+		if (!Objects.equals(this.id, other.id)) {
+			return false;
+		}
+		if (!Objects.equals(this.dimension, other.dimension)) {
+			return false;
+		}
+		if (!Objects.equals(this.deployedExplorers, other.deployedExplorers)) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SurfaceResource other = (SurfaceResource) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.dimension, other.dimension)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.deployedExplorers, other.deployedExplorers)) {
-            return false;
-        }
-        if (!Objects.equals(this.errors, other.errors)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Surface[" + "id=" + id
-                + ", dimension=" + dimension
-                + ", createdDate=" + createdDate
-                + ", deployedExplorers=" + deployedExplorers
-                + ", errors=" + errors + ']';
-    }
+	@Override
+	public String toString() {
+		return "Surface[" + "id=" + id
+				+ ", dimension=" + dimension
+				+ ", createdDate=" + createdDate
+				+ ", deployedExplorers=" + deployedExplorers
+				+ ", errors=" + getErrors() + ']';
+	}
 }

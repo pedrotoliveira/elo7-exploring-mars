@@ -4,6 +4,7 @@ import br.com.elo7.mars.explorer.api.endpoint.ExplorerEndpoint;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 
 /**
  * A ExplorerResource
@@ -18,162 +21,175 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "A Explorer")
 public class ExplorerResource extends BaseResource {
 
-    @Override
-    public Class<?> getEndpointClass() {
-        return ExplorerEndpoint.class;
-    }
+	private static final long serialVersionUID = -6181102769708333124L;
 
-    @Override
-    public String getRel() {
-        return "explorer";
-    }
+	@Override
+	public Class<?> getEndpointClass() {
+		return ExplorerEndpoint.class;
+	}
 
-    @JsonProperty("id")
-    @ApiModelProperty(value = "UUID of explorer")
-    private String id;
+	@Override
+	public String getRel() {
+		return "explorer";
+	}
 
-    @JsonProperty("currentPosition")
-    @ApiModelProperty(required = true, value = "The Explorer Current Position")
-    @NotNull
-    private Position currentPosition;
+	@Override
+	public Resource<ExplorerResource> buildResource(Link... links) {
+		return new Resource<>(this, links);
+	}
 
-    @JsonProperty("instructions")
-    @ApiModelProperty(required = true, value = "A char sequence representing the explorer movement instructions.\nExample: \"LMRMLMMRMLMRM\"")
-    @NotNull
-    private String instructions;
+	@Override
+	public Resource<ExplorerResource> buildResource(List<Link> links) {
+		return new Resource<>(this, links);
+	}
+	
+	@JsonProperty("id")
+	@ApiModelProperty(value = "UUID of explorer")
+	private String id;
 
-    @JsonProperty("executionResults")
-    @ApiModelProperty(value = "The Execution Results")
+	@JsonProperty("currentPosition")
+	@ApiModelProperty(required = true, value = "The Explorer Current Position")
+	@NotNull
+	private Position currentPosition;
+
+	@JsonProperty("instructions")
+	@ApiModelProperty(required = true, value = "A char sequence representing the explorer movement instructions.\nExample: \"LMRMLMMRMLMRM\"")
+	@NotNull
+	private String instructions;
+
+	@JsonProperty("executionResults")
+	@ApiModelProperty(value = "The Execution Results")
+	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
     private List<ExecutionResultResource> executionResults = new ArrayList<>();
 
-    @JsonProperty("registeredInstructions")
-    @ApiModelProperty(value = "The Registered Instrauctions")
-    private List<String> registeredInstructions = new ArrayList<>();
+	@JsonProperty("registeredInstructions")
+	@ApiModelProperty(value = "The Registered Instrauctions")
+	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+	private List<String> registeredInstructions = new ArrayList<>();
 
-    public ExplorerResource() {
-    }
+	public ExplorerResource() {
+	}
 
-    public ExplorerResource(String id, Position currentPosition, String instructions) {
-        this.id = id;
-        this.currentPosition = currentPosition;
-        this.instructions = instructions;
-    }
+	public ExplorerResource(String id, Position currentPosition, String instructions) {
+		this.id = id;
+		this.currentPosition = currentPosition;
+		this.instructions = instructions;
+	}
 
-    public ExplorerResource id(String id) {
-        this.id = id;
-        return this;
-    }
+	public ExplorerResource id(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public ExplorerResource currentPosition(ExplorerPosition currentPosition) {
-        this.currentPosition = new Position()
-                .xAxis(currentPosition.getxAxis())
-                .yAxis(currentPosition.getyAxis())
-                .direction(currentPosition.getDirectionAsString());
-        return this;
-    }
+	public ExplorerResource currentPosition(ExplorerPosition currentPosition) {
+		this.currentPosition = new Position()
+				.xAxis(currentPosition.getxAxis())
+				.yAxis(currentPosition.getyAxis())
+				.direction(currentPosition.getDirectionAsString());
+		return this;
+	}
 
     public ExplorerResource executionResults(List<ExecutionResultResource> executionResults) {
-        this.executionResults = executionResults;
-        return this;
-    }
+		this.executionResults = executionResults;
+		return this;
+	}
 
-    public ExplorerResource instructions(Collection<InstructionAction> instructionActions) {
-        StringBuilder builder = new StringBuilder();
-        instructionActions.stream().forEach((action)-> builder.append(action.getRepresentation()));
-        this.instructions = builder.toString();
-        return this;
-    }
+	public ExplorerResource instructions(Collection<InstructionAction> instructionActions) {
+		StringBuilder builder = new StringBuilder();
+		instructionActions.stream().forEach((action) -> builder.append(action.getRepresentation()));
+		this.instructions = builder.toString();
+		return this;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Position getCurrentPosition() {
-        return currentPosition;
-    }
+	public Position getCurrentPosition() {
+		return currentPosition;
+	}
 
-    public void setCurrentPosition(Position currentPosition) {
-        this.currentPosition = currentPosition;
-    }
+	public void setCurrentPosition(Position currentPosition) {
+		this.currentPosition = currentPosition;
+	}
 
-    public String getInstructions() {
-        return instructions;
-    }
+	public String getInstructions() {
+		return instructions;
+	}
 
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
+	public void setInstructions(String instructions) {
+		this.instructions = instructions;
+	}
 
     public List<ExecutionResultResource> getExecutionResults() {
-        return executionResults;
-    }
+		return executionResults;
+	}
 
     public void setExecutionResults(List<ExecutionResultResource> executionResults) {
-        this.executionResults = executionResults;
-    }
+		this.executionResults = executionResults;
+	}
 
-    public List<String> getRegisteredInstructions() {
-        return registeredInstructions;
-    }
+	public List<String> getRegisteredInstructions() {
+		return registeredInstructions;
+	}
 
-    public void setRegisteredInstructions(List<String> registeredInstructions) {
-        this.registeredInstructions = registeredInstructions;
-    }
+	public void setRegisteredInstructions(List<String> registeredInstructions) {
+		this.registeredInstructions = registeredInstructions;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.currentPosition);
-        hash = 37 * hash + Objects.hashCode(this.instructions);
-        hash = 37 * hash + Objects.hashCode(this.executionResults);
-        hash = 37 * hash + Objects.hashCode(this.registeredInstructions);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 37 * hash + Objects.hashCode(this.id);
+		hash = 37 * hash + Objects.hashCode(this.currentPosition);
+		hash = 37 * hash + Objects.hashCode(this.instructions);
+		hash = 37 * hash + Objects.hashCode(this.executionResults);
+		hash = 37 * hash + Objects.hashCode(this.registeredInstructions);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ExplorerResource other = (ExplorerResource) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.instructions, other.instructions)) {
-            return false;
-        }
-        if (!Objects.equals(this.currentPosition, other.currentPosition)) {
-            return false;
-        }
-        if (!Objects.equals(this.executionResults, other.executionResults)) {
-            return false;
-        }
-        if (!Objects.equals(this.registeredInstructions, other.registeredInstructions)) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ExplorerResource other = (ExplorerResource) obj;
+		if (!Objects.equals(this.id, other.id)) {
+			return false;
+		}
+		if (!Objects.equals(this.instructions, other.instructions)) {
+			return false;
+		}
+		if (!Objects.equals(this.currentPosition, other.currentPosition)) {
+			return false;
+		}
+		if (!Objects.equals(this.executionResults, other.executionResults)) {
+			return false;
+		}
+		if (!Objects.equals(this.registeredInstructions, other.registeredInstructions)) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "Explorer["
-                + "id=" + id
-                + ", currentPosition=" + currentPosition
-                + ", instructions=" + instructions
-                + ", executionResults=" + executionResults
-                + ", registeredInstructions=" + registeredInstructions
-                + ']';
-    }
-
+	@Override
+	public String toString() {
+		return "Explorer["
+				+ "id=" + id
+				+ ", currentPosition=" + currentPosition
+				+ ", instructions=" + instructions
+				+ ", executionResults=" + executionResults
+				+ ", registeredInstructions=" + registeredInstructions
+				+ ']';
+	}
 }

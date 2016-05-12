@@ -7,8 +7,10 @@ import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.jaxrs.JaxRsLinkBuilder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,47 +21,62 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExplorerAdapter implements ResourceAdapter<Explorer, ExplorerResource> {
 
-    @Override
-    public Resource<ExplorerResource> adaptExpandedResource(Explorer domain) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Resource<ExplorerResource> adaptExpandedResource(Explorer domain) {
+		return adaptResource(domain);
+	}
 
-    @Override
-    public Resource<ExplorerResource> adaptResource(Explorer domain) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Resource<ExplorerResource> adaptResource(Explorer domain) {
+		ExplorerResource explorerResource = map(domain);
+		Link link = JaxRsLinkBuilder
+					.linkTo(explorerResource.getEndpointClass())
+					.slash(explorerResource.getId())
+					.withSelfRel();
+		
+		return explorerResource.buildResource(link);
+	}
 
-    @Override
-    public Resources<ExplorerResource> adaptAll(Collection<Explorer> domainCollection) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public Resources<ExplorerResource> adaptAll(Collection<Explorer> domainCollection) {
+		List<Link> links = new ArrayList<>();
+		List<ExplorerResource> explorerResources = mapCollection(domainCollection, links);
+		return new Resources<>(explorerResources, links);
+	}
 
-    public List<ExplorerResource> map(Collection<Explorer> deployedExplorers) {
-        List<ExplorerResource> explorerResources = new ArrayList<>();
-        deployedExplorers.stream().forEach((Explorer explorer) -> {
-            ExplorerResource explorerResource = new ExplorerResource()
-                    .id(explorer.getId())
-                    .currentPosition(explorer.getCurrentPosition())
-                    .instructions(explorer.getRegisteredInstructions())
-                    .executionResults(mapExecutions(explorer.getExecutionResults()));
+	private List<ExplorerResource> mapCollection(Collection<Explorer> deployedExplorers, List<Link> links) {
+		List<ExplorerResource> explorerResources = new ArrayList<>();
+		deployedExplorers.stream().forEach((Explorer explorer) -> {
+			ExplorerResource resource = map(explorer);
+			Link link = JaxRsLinkBuilder
+					.linkTo(resource.getEndpointClass())
+					.slash(resource.getId())
+					.withRel(resource.getRel());
+			links.add(link);
+		});
+		return explorerResources;
+	}
 
-            explorerResources.add(explorerResource);
-        });
-        return explorerResources;
-    }
+	private ExplorerResource map(Explorer explorer) {
+		return new ExplorerResource()
+				.id(explorer.getId())
+				.currentPosition(explorer.getCurrentPosition())
+				.instructions(explorer.getRegisteredInstructions())
+				.executionResults(mapExecutions(explorer.getExecutionResults()));
+	}
 
-    private List<ExecutionResultResource> mapExecutions(Collection<ExecutionResult> executionResults) {
-        List<ExecutionResultResource> executionResultResources = new ArrayList<>();
-        executionResults.stream().forEach((ExecutionResult result) -> {
-            ExecutionResultResource executionResultResource = new ExecutionResultResource()
-                    .startPosition(result.getStartPosition())
-                    .finalPosition(result.getFinalPosition())
-                    .status(result.getStatus())
-                    .instruction(result.getInstructionRepresentation())
-                    .notifications(result.getNotifications());
+	private List<ExecutionResultResource> mapExecutions(Collection<ExecutionResult> executionResults) {
+		List<ExecutionResultResource> executionResultResources = new ArrayList<>();
+		executionResults.stream().forEach((ExecutionResult result) -> {
+			ExecutionResultResource executionResultResource = new ExecutionResultResource()
+					.startPosition(result.getStartPosition())
+					.finalPosition(result.getFinalPosition())
+					.status(result.getStatus())
+					.instruction(result.getInstructionRepresentation())
+					.notifications(result.getNotifications());
 
-            executionResultResources.add(executionResultResource);
-        });
-        return executionResultResources;
-    }
+			executionResultResources.add(executionResultResource);
+		});
+		return executionResultResources;
+	}
 }

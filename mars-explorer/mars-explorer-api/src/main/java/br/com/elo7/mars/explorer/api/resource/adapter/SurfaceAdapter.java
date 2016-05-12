@@ -28,13 +28,13 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
     @Override
     public Resource<SurfaceResource> adaptExpandedResource(Surface domain) {
         SurfaceResource surfaceResource = map(domain);
-        surfaceResource.deployedExplorers(explorerAdapter.map(domain.getDeployedExplorers()));
-        Link selfLink = JaxRsLinkBuilder
+        surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
+        Link link = JaxRsLinkBuilder
                 .linkTo(surfaceResource.getEndpointClass())
                 .slash(surfaceResource.getId())
-                .withSelfRel();
+                .withRel(surfaceResource.getRel());
 
-        return new Resource<>(surfaceResource, selfLink);
+        return surfaceResource.buildResource(link);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
         Link selfLink = JaxRsLinkBuilder
                 .linkTo(surfaceResource.getEndpointClass())
                 .slash(surfaceResource.getId())
-                .withSelfRel();
+                .withRel(surfaceResource.getRel());
 
-        Resource<SurfaceResource> resource = new Resource<>(surfaceResource, selfLink);
-        Resources<ExplorerResource> explorerResources = explorerAdapter.adaptAll(domain.getDeployedExplorers());
-        resource.add(explorerResources.getLinks());
+        Resource<SurfaceResource> resource = surfaceResource.buildResource(selfLink);
+		List<Link> explorersLinks = explorerAdapter.adaptAll(domain.getDeployedExplorers()).getLinks();
+		resource.add(explorersLinks);
         return resource;
     }
 
@@ -62,7 +62,7 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
                     .slash(surfaceResource.getId())
                     .withRel(surfaceResource.getRel());
 						
-			surfaceResource.deployedExplorers(explorerAdapter.map(domain.getDeployedExplorers()));
+			surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
             surfaceResources.add(surfaceResource);
             links.add(link);
         });

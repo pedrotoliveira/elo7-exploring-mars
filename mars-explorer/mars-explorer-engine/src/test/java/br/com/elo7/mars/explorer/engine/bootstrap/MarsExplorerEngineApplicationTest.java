@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.assertNotNull;
 
 /**
  * MarsExplorerEngineApplication Tests
@@ -21,20 +22,29 @@ public class MarsExplorerEngineApplicationTest {
 
 	@Autowired
 	MarsExplorerEngineApplication application;
-	
+
 	@Autowired
 	SurfaceRepository repository;
-	
+
 	@Test
 	public void testRun() throws Exception {
-		application.run("5 5",
-				"1 2 N",
-				"LMLMLMLMM",
-				"3 3 E", "MMRMMRMRRM",
-				"2 2 S", "MMMMMMMMLMMMM",
-				"5 5 W", "LLMMLMMRM");
-		
+		application.run(
+				"5 5",
+				"1 2 N", "LMLMLMLMM",
+				"3 3 E", "MMRMMRMRRM");
+
 		List<Surface> surfaces = repository.findAll();
-		surfaces.forEach(System.out :: println);
+		assertNotNull(surfaces);
+		
+		System.out.println("==========================");		
+		application.run(
+				"10 10",
+				"1 1 N", "LMLMLMLMM",
+				"5 2 E", "MMRMMRMRRMMMMRRMM",
+				"6 7 S", "MMMMMMMMLMMMM",
+				"4 4 W", "LLMMLMMRM");
+
+		surfaces = repository.findAll();
+		assertNotNull(surfaces);
 	}
 }

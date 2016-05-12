@@ -18,16 +18,17 @@ https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c
 ## Project Modules:
  - mars-explorer-engine: Engine de criação e manipulação das sondas.
  - mars-explorer-api: API Rest para a engine. (WIP)
-
-### API Documentation (Swagger)
- - http://localhost:8080/mars-explorer/
-
-### API WADL
- - http://localhost:8080/mars-explorer/api/application.wadl
- - http://localhost:8080/mars-explorer/api/application.wadl?detail=true
-
+ 
 ### Rodando a API da Engine via linha de comando:
 ```
 cd mars-explorer-api
 mvn spring-boot:run
 ```
+
+### API Documentation (Swagger)
+ - http://localhost:8080/mars-explorer/
+ Acessando a documentação é possível ver quais serviços foram expostos.
+
+### API WADL
+ - http://localhost:8080/mars-explorer/api/application.wadl
+ - http://localhost:8080/mars-explorer/api/application.wadl?detail=true

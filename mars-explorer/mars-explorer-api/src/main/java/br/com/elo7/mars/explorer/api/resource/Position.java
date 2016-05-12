@@ -4,14 +4,16 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 /**
  * The Explorer Position
- *
  */
 @ApiModel(description = "The Explorer Position")
-public class Position {
+public class Position implements Serializable {
+
+	private static final long serialVersionUID = 6476153333816770400L;		
 
     @JsonProperty("xAxis")
     @ApiModelProperty(required = true, value = "X Axis position in the current surface")
