@@ -42,7 +42,7 @@ public class SurfacesEndpoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Retrieve Created Surfaces", notes = "Retrieve Created Surfaces", nickname = "get")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Collection.class),
+		@ApiResponse(code = 200, message = "OK", response = SurfaceResource.class, responseContainer = "List"),
 		@ApiResponse(code = 204, message = "No Content"),
 		@ApiResponse(code = 500, message = "Failure")
 	})
