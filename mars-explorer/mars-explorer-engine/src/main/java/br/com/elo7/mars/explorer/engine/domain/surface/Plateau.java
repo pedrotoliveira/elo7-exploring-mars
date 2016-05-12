@@ -28,7 +28,7 @@ class Plateau implements Surface {
 	public static final String ALREDY_DEPLOYED = "Alredy deployed";
 
 	@Id
-	private String id;
+	private final String id;
 	private Date createdDate;
 	private int xAxis;
 	private int yAxis;
@@ -72,7 +72,7 @@ class Plateau implements Surface {
 	}
 
 	private String createDeployErrorMessage(Explorer explorer, String message) {
-		return "Cannot deploy " + explorer + " cause: " + message;
+		return "Cannot deploy explorer: " + explorer.getId() + " cause: " + message;
 	}
 
 	@Override
