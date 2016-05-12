@@ -77,11 +77,9 @@ public class PlateauTest extends FixtureTest {
 
 	@Test
 	public void testDeployOneExplorer() {
-		Plateau plateau = validPlateau();
-		Explorer explorer = mock(Explorer.class);
 		ExplorerPosition explorerPosition = new ExplorerPosition(randomInt(10, 50), randomInt(10, 50), Direction.SOUTH);
 		when(explorer.getCurrentPosition()).thenReturn(explorerPosition);
-		assertThat(plateau.deployExplorer(explorer), equalTo(explorer));
+		assertThat(validPlateau().deployExplorer(explorer), equalTo(explorer));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -101,7 +99,7 @@ public class PlateauTest extends FixtureTest {
 			plateau.deployExplorer(explorer1);
 			plateau.deployExplorer(explorer2);
 		} catch (Exception ex) {
-			assertThat(ex.getMessage(), equalTo("Cannot deploy " + explorer2 + " cause: " + SurfaceScanResult.COLLISION.getMessage()));
+			assertThat(ex.getMessage(), equalTo("Cannot deploy explorer: " + explorer2.getId() + " cause: " + SurfaceScanResult.COLLISION.getMessage()));
 			throw ex;
 		}
 	}
@@ -124,7 +122,7 @@ public class PlateauTest extends FixtureTest {
 			plateau.deployExplorer(explorer1);
 			plateau.deployExplorer(explorer2);
 		} catch (Exception ex) {
-			assertThat(ex.getMessage(), equalTo("Cannot deploy " + explorer2 + " cause: " + Plateau.ALREDY_DEPLOYED));
+			assertThat(ex.getMessage(), equalTo("Cannot deploy explorer: " + explorer2.getId() + " cause: " + Plateau.ALREDY_DEPLOYED));
 			throw ex;
 		}
 	}
