@@ -52,6 +52,11 @@ public class SurfaceResource extends BaseResource {
 	@ApiModelProperty(required = true, value = "Surface Dimension")
 	@NotNull
 	private Dimension dimension;
+	
+	@JsonProperty("explorerPositions")
+	@ApiModelProperty(value = "Deployed Explorer Positions")
+	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
+	private List<Position> explorerPositions;
 
 	@JsonProperty("createdDate")
 	@ApiModelProperty(value = "Creation Date")
@@ -83,6 +88,11 @@ public class SurfaceResource extends BaseResource {
 		this.deployedExplorers = deployedExplorers;
 		return this;
 	}
+	
+	public SurfaceResource explorerPositions(String positions) {
+		//TODO:....
+		return this;
+	}
 
 	public String getId() {
 		return id;
@@ -100,12 +110,24 @@ public class SurfaceResource extends BaseResource {
 		this.dimension = dimension;
 	}
 
+	public List<Position> getExplorerPositions() {
+		return explorerPositions;
+	}
+
+	public void setExplorerPositions(List<Position> explorerPositions) {
+		this.explorerPositions = explorerPositions;
+	}
+
 	public DateTime getCreatedDate() {
 		return createdDate;
 	}
 
 	public void setCreatedDate(DateTime createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	public boolean hasDeployedExplorers() {
+		return getDeployedExplorers().getContent() != null && !getDeployedExplorers().getContent().isEmpty();
 	}
 
 	public Resources<ExplorerResource> getDeployedExplorers() {

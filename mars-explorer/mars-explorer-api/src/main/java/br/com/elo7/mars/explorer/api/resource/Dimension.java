@@ -1,5 +1,6 @@
 package br.com.elo7.mars.explorer.api.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -56,6 +57,11 @@ public class Dimension {
 
 	public void setyAxis(Integer yAxis) {
 		this.yAxis = yAxis;
+	}
+	
+	@JsonIgnore
+	public String formattedInput() {
+		return String.format("%d %d", getxAxis(), getyAxis());
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package br.com.elo7.mars.explorer.api.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -77,6 +78,11 @@ public class Position implements Serializable {
     public void setDirection(String direction) {
         this.direction = direction;
     }
+	
+	@JsonIgnore
+	public String formattedInput() {
+		return String.format("%d %d %s", getxAxis(), getyAxis(), getDirection());
+	}
 
     @Override
     public int hashCode() {
@@ -115,5 +121,5 @@ public class Position implements Serializable {
     public String toString() {
         return "Position[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + ']';
     }
-
+	
 }

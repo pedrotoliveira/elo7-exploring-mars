@@ -40,8 +40,8 @@ public interface ResourceAdapter<Domain, T extends BaseResource> {
      *
      * @return the resource
      */
-    default Resource<T> adapt(Domain domain, boolean expand) {
-        return (expand) ? adaptExpandedResource(domain) : adaptResource(domain);
+    default Resource<T> adapt(Domain domain, Boolean expand) {
+        return (expand != null && expand) ? adaptExpandedResource(domain) : adaptResource(domain);
     }
 
     /**
