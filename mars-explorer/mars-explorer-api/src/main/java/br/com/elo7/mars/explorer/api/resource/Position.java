@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "The Explorer Position")
 public class Position implements Serializable {
 
-	private static final long serialVersionUID = 6476153333816770400L;		
+	private static final long serialVersionUID = 6476153333816770400L;
 
     @JsonProperty("xAxis")
     @ApiModelProperty(required = true, value = "X Axis position in the current surface")
@@ -78,7 +78,7 @@ public class Position implements Serializable {
     public void setDirection(String direction) {
         this.direction = direction;
     }
-	
+
 	@JsonIgnore
 	public String formattedInput() {
 		return String.format("%d %d %s", getxAxis(), getyAxis(), getDirection());
@@ -121,5 +121,5 @@ public class Position implements Serializable {
     public String toString() {
         return "Position[" + "xAxis=" + xAxis + ", yAxis=" + yAxis + ", direction=" + direction + ']';
     }
-	
+
 }

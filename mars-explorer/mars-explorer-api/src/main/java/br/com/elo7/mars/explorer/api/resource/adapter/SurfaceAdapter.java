@@ -1,7 +1,6 @@
 package br.com.elo7.mars.explorer.api.resource.adapter;
 
 import br.com.elo7.mars.explorer.api.resource.Dimension;
-import br.com.elo7.mars.explorer.api.resource.ExplorerResource;
 import br.com.elo7.mars.explorer.api.resource.SurfaceResource;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
                     .linkTo(surfaceResource.getEndpointClass())
                     .slash(surfaceResource.getId())
                     .withRel(surfaceResource.getRel());
-						
+
 			surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
             surfaceResources.add(surfaceResource);
             links.add(link);
@@ -73,7 +72,8 @@ public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource>
         return new SurfaceResource()
                 .id(domain.getId())
                 .dimension(new Dimension(domain.getxAxis(), domain.getyAxis()))
-                .createdDate(domain.getCreatedDate());
+                .createdDate(domain.getCreatedDate())
+                .explorersPositions(domain.getDeployedExplorers());
     }
 
     public void setExplorerAdapter(ExplorerAdapter explorerAdapter) {

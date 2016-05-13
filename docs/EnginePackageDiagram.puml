@@ -1,0 +1,69 @@
+@startuml
+class br.com.elo7.mars.explorer.engine.application.MarsExplorerEngineApplication
+class br.com.elo7.mars.explorer.engine.application.PlateauScanEngine
+class br.com.elo7.mars.explorer.engine.domain.action.MoveFoward
+class br.com.elo7.mars.explorer.engine.domain.action.TurnLeft
+class br.com.elo7.mars.explorer.engine.domain.action.TurnRight
+class br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResult
+class br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactory
+class br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+class br.com.elo7.mars.explorer.engine.domain.explorer.InstructionCollectionFactory
+class br.com.elo7.mars.explorer.engine.domain.explorer.MarsExplorer
+class br.com.elo7.mars.explorer.engine.domain.surface.Plateau
+class br.com.elo7.mars.explorer.engine.domain.surface.SurfaceFactory
+class br.com.elo7.mars.explorer.engine.domain.validator.CoordinateValidator
+class br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator
+enum br.com.elo7.mars.explorer.engine.domain.explorer.Direction
+enum br.com.elo7.mars.explorer.engine.domain.explorer.Instruction
+enum br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult
+interface br.com.elo7.mars.explorer.engine.application.SurfaceScanEngine
+interface br.com.elo7.mars.explorer.engine.domain.Factory
+interface br.com.elo7.mars.explorer.engine.domain.action.MoveAction
+interface br.com.elo7.mars.explorer.engine.domain.explorer.Explorer
+interface br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction
+interface br.com.elo7.mars.explorer.engine.domain.surface.Surface
+interface br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine --|> br.com.elo7.mars.explorer.engine.application.SurfaceScanEngine
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine ..> br.com.elo7.mars.explorer.engine.domain.Factory
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine ..> br.com.elo7.mars.explorer.engine.domain.explorer.Explorer
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine ..> br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine ..> br.com.elo7.mars.explorer.engine.domain.surface.Surface
+br.com.elo7.mars.explorer.engine.application.PlateauScanEngine ..> br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository
+br.com.elo7.mars.explorer.engine.domain.action.MoveFoward ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.action.MoveFoward ..> br.com.elo7.mars.explorer.engine.domain.explorer.Direction
+br.com.elo7.mars.explorer.engine.domain.action.MoveFoward --|> br.com.elo7.mars.explorer.engine.domain.action.MoveAction
+br.com.elo7.mars.explorer.engine.domain.action.TurnLeft ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.action.TurnLeft ..> br.com.elo7.mars.explorer.engine.domain.explorer.Direction
+br.com.elo7.mars.explorer.engine.domain.action.TurnLeft --|> br.com.elo7.mars.explorer.engine.domain.action.MoveAction
+br.com.elo7.mars.explorer.engine.domain.action.TurnRight ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.action.TurnRight ..> br.com.elo7.mars.explorer.engine.domain.explorer.Direction
+br.com.elo7.mars.explorer.engine.domain.action.TurnRight --|> br.com.elo7.mars.explorer.engine.domain.action.MoveAction
+br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactory ..> br.com.elo7.mars.explorer.engine.domain.validator.CoordinateValidator
+br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactory ..> br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator
+br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerFactory --|> br.com.elo7.mars.explorer.engine.domain.Factory
+br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition ..> br.com.elo7.mars.explorer.engine.domain.validator.CoordinateValidator
+br.com.elo7.mars.explorer.engine.domain.explorer.InstructionCollectionFactory ..> br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator
+br.com.elo7.mars.explorer.engine.domain.explorer.InstructionCollectionFactory --|> br.com.elo7.mars.explorer.engine.domain.Factory
+br.com.elo7.mars.explorer.engine.domain.explorer.MarsExplorer ..> br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult
+br.com.elo7.mars.explorer.engine.domain.explorer.MarsExplorer --|> br.com.elo7.mars.explorer.engine.domain.explorer.Explorer
+br.com.elo7.mars.explorer.engine.domain.explorer.MarsExplorer ..> br.com.elo7.mars.explorer.engine.domain.surface.Surface
+br.com.elo7.mars.explorer.engine.domain.surface.Plateau ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.surface.Plateau ..> br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult
+br.com.elo7.mars.explorer.engine.domain.surface.Plateau ..> br.com.elo7.mars.explorer.engine.domain.explorer.Explorer
+br.com.elo7.mars.explorer.engine.domain.surface.Plateau --|> br.com.elo7.mars.explorer.engine.domain.surface.Surface
+br.com.elo7.mars.explorer.engine.domain.surface.SurfaceFactory ..> br.com.elo7.mars.explorer.engine.domain.validator.CoordinateValidator
+br.com.elo7.mars.explorer.engine.domain.surface.SurfaceFactory ..> br.com.elo7.mars.explorer.engine.domain.validator.InputRegexValidator
+br.com.elo7.mars.explorer.engine.domain.surface.SurfaceFactory --|> br.com.elo7.mars.explorer.engine.domain.Factory
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction ..> br.com.elo7.mars.explorer.engine.domain.action.MoveFoward
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction ..> br.com.elo7.mars.explorer.engine.domain.action.TurnLeft
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction ..> br.com.elo7.mars.explorer.engine.domain.action.TurnRight
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction ..> br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction ..> br.com.elo7.mars.explorer.engine.domain.action.MoveAction
+br.com.elo7.mars.explorer.engine.domain.explorer.Instruction --|> br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction
+br.com.elo7.mars.explorer.engine.application.SurfaceScanEngine ..> br.com.elo7.mars.explorer.engine.domain.surface.Surface
+br.com.elo7.mars.explorer.engine.domain.action.MoveAction ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.explorer.Explorer ..> br.com.elo7.mars.explorer.engine.domain.surface.Surface
+br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction ..> br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult
+br.com.elo7.mars.explorer.engine.domain.surface.Surface ..> br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition
+br.com.elo7.mars.explorer.engine.domain.surface.Surface ..> br.com.elo7.mars.explorer.engine.domain.explorer.Explorer
+@enduml

@@ -53,10 +53,14 @@ public abstract class BaseResource implements Serializable  {
 	public void setErrors(List<Message> errors) {
 		this.errors = errors;
 	}
-	
+
+    public void addError(final Message error) {
+        getErrors().add(error);
+    }
+
 	/**
 	 * Build Resource Representation with Links
-	 * 
+	 *
 	 * @param links
 	 * @return a Resource
 	 */
@@ -64,7 +68,7 @@ public abstract class BaseResource implements Serializable  {
 
 	/**
 	 * Build Resource Representation with Links
-	 * 
+	 *
 	 * @param links
 	 * @return a Resource
 	 */

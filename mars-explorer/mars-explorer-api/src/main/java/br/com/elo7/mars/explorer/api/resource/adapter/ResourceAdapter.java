@@ -1,6 +1,7 @@
 package br.com.elo7.mars.explorer.api.resource.adapter;
 
 import br.com.elo7.mars.explorer.api.resource.BaseResource;
+import br.com.elo7.mars.explorer.api.resource.error.Message;
 import java.util.Collection;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -40,8 +41,18 @@ public interface ResourceAdapter<Domain, T extends BaseResource> {
      *
      * @return the resource
      */
-    default Resource<T> adapt(Domain domain, Boolean expand) {
-        return (expand != null && expand) ? adaptExpandedResource(domain) : adaptResource(domain);
+    default Resource<T> adapt(Domain domain, boolean expand) {
+        return (expand) ? adaptExpandedResource(domain) : adaptResource(domain);
+    }
+
+    default Resource<T> adaptWithErros(Domain domain, boolean expand, Message... errors) {
+        Resource<T> resource = adapt(domain, expand);
+        if (errors != null) {
+            for (Message message : errors) {
+                resource.getContent().addError(message);
+            }
+        }
+        return resource;
     }
 
     /**
