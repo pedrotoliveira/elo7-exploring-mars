@@ -34,9 +34,9 @@ public interface SurfaceScanEngine {
      * https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c#sa%C3%ADda-esperada
      *
      * @param inputs a collection of raw input lines.
-     * @return A Collection of <code>String</code> represents explorers coordinations
+     * @return A Surface with a Collection of <code>String</code> represents explorers coordinations
      */
-    Collection<String> createSurfaceAndScan(Collection<String> inputs);
+    Surface createSurfaceAndScan(Collection<String> inputs);
 	
 	/**
 	 * Create a Surface based on input.
@@ -78,5 +78,5 @@ public interface SurfaceScanEngine {
 	 * @param surfaceId the surface id.
 	 * @return A Collection of <code>String</code> represents explorers coordinations
 	 */
-	Collection<String> scan(String surfaceId);
+	Surface scan(String surfaceId);
 }

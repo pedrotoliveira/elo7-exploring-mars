@@ -63,4 +63,11 @@ public interface Surface {
 	 * @return a Collection of Explorer
 	 */
 	Collection<Explorer> getDeployedExplorers();
+	
+	/**
+	 * Get Explorers Final Position.
+	 * 
+	 * @return A String collection with explorers positions.
+	 */
+	Collection<String> getExplorersPosition();
 }

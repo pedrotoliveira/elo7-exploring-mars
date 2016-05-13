@@ -42,7 +42,7 @@ public class MarsExplorerEngineApplication implements CommandLineRunner {
 		if (args != null && args.length > 0) {
 			Collection<String> inputs = new ArrayList<>();
 			Arrays.asList(args).forEach(inputs::add);
-			Collection<String> outputs = surfaceScanEngine.createSurfaceAndScan(inputs);
+			Collection<String> outputs = surfaceScanEngine.createSurfaceAndScan(inputs).getExplorersPosition();
 			outputs.forEach(System.out::println);
 		}
 	}

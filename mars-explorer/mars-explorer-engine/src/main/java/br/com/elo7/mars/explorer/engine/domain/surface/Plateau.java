@@ -3,6 +3,7 @@ package br.com.elo7.mars.explorer.engine.domain.surface;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExplorerPosition;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -87,9 +88,9 @@ class Plateau implements Surface {
 	}
 
 	private boolean isPositionOutOfBoundary(final ExplorerPosition position) {
-		return (position.getxAxis() < 0 
+		return (position.getxAxis() < 0
 				|| position.getyAxis() < 0
-				|| position.getxAxis() > getxAxis() 
+				|| position.getxAxis() > getxAxis()
 				|| position.getyAxis() > getyAxis());
 	}
 
@@ -126,6 +127,7 @@ class Plateau implements Surface {
 		this.yAxis = yAxis;
 	}
 
+	@Override
 	public List<Explorer> getDeployedExplorers() {
 		if (deployedExplorers == null) {
 			this.deployedExplorers = new ArrayList<>();
@@ -135,6 +137,15 @@ class Plateau implements Surface {
 
 	public void setDeployedExplorers(List<Explorer> deployedExplorers) {
 		this.deployedExplorers = deployedExplorers;
+	}
+
+	@Override
+	public Collection<String> getExplorersPosition() {
+		Collection<String> positions = new ArrayList<>();
+		getDeployedExplorers().forEach((deployed) -> {
+			positions.add(deployed.getCurrentPosition().getFormmatedPosition());
+		});
+		return positions;
 	}
 
 	@Override

@@ -5,10 +5,8 @@ import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import br.com.elo7.mars.explorer.engine.domain.explorer.InstructionAction;
 import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.function.Consumer;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	}
 
 	@Override
-	public Collection<String> createSurfaceAndScan(Collection<String> inputs) {
+	public Surface createSurfaceAndScan(Collection<String> inputs) {
 		Validate.notEmpty(inputs, "Missing Inputs");
 		Iterator<String> inputsIterator = inputs.iterator();
 		Surface surface = createSurface(inputsIterator.next());
@@ -61,7 +59,7 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 	}
 
 	@Override
-	public Collection<String> scan(String surfaceId) {
+	public Surface scan(String surfaceId) {
 		Validate.notEmpty(surfaceId, "Missing Surface Id");
 		Surface surface = surfaceRepository.findOne(surfaceId);
 		return moveExplorers(surface);
@@ -86,18 +84,9 @@ public class PlateauScanEngine implements SurfaceScanEngine {
 		return surface.deployExplorer(explorer);
 	}
 
-	private Collection<String> moveExplorers(Surface surface) {
-		Collection<String> results = new ArrayList<>();
-		surface.getDeployedExplorers().forEach(executeInstructionsAndFillResults(surface, results));
-		surfaceRepository.save(surface);
-		return results;
-	}
-
-	private Consumer<Explorer> executeInstructionsAndFillResults(Surface surface, Collection<String> results) {
-		return (explorer) -> {
-			explorer.excuteInstructions(surface);
-			results.add(explorer.getCurrentPosition().getFormmatedPosition());
-		};
+	private Surface moveExplorers(Surface surface) {		
+		surface.getDeployedExplorers().forEach((explorer) -> explorer.excuteInstructions(surface));
+		return surfaceRepository.save(surface);
 	}
 
 	@Override

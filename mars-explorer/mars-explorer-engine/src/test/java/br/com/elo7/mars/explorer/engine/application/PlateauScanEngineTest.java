@@ -56,17 +56,14 @@ public class PlateauScanEngineTest {
 	@SuppressWarnings("serial")
 	public void testCreateSurfaceAndScan() {
 		Collection<String> inputs = createTestInputs();
-		Collection<String> expectedResults = createExpectedResult();
 		Iterator<String> inputsIterator = inputs.iterator();
-
 		Surface surface = createTestSurface(inputsIterator);
 		List<Explorer> deployedExplorers = createTestExplorers(inputsIterator, surface);
-		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
-		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
-		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
+				
+		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);		
 		when(surfaceRepository.save(surface)).thenReturn(surface);
 		
-		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(expectedResults));
+		assertThat(scanEngine.createSurfaceAndScan(inputs), equalTo(surface));
 
 		verify(surfaceFactory, times(1)).create(inputs.iterator().next());
 		verify(explorerFactory, times(2)).create(anyString());
@@ -77,7 +74,6 @@ public class PlateauScanEngineTest {
 		deployedExplorers.forEach((Explorer explorer) -> {
 			verify(explorer, atLeastOnce()).registerInstructions(anyCollectionOf(InstructionAction.class));
 			verify(explorer, atLeastOnce()).excuteInstructions(surface);
-			verify(explorer, atLeastOnce()).getCurrentPosition();
 		});
 	}
 
@@ -124,28 +120,7 @@ public class PlateauScanEngineTest {
 		}
 		return deployedExplorers;
 	}
-	
-	private List<ExplorerPosition> createExpectedPositions(final Collection<String> expectedResults) {
-		List<ExplorerPosition> expectedPositions = new ArrayList<>();
-		expectedResults.forEach((String result) -> {
-			Scanner scanner = new Scanner(result);
-			ExplorerPosition position = new ExplorerPosition(
-					scanner.nextInt(),
-					scanner.nextInt(),
-					Direction.translate(scanner.next()));
-
-			expectedPositions.add(position);
-		});
-		return expectedPositions;
-	}	
-		
-	private void doExpectedExplorerInvocations(List<Explorer> deployedExplorers, List<ExplorerPosition> expectedPositions) {
-		int index = 0;
-		for (Explorer explorer : deployedExplorers) {
-			when(explorer.getCurrentPosition()).thenReturn(expectedPositions.get(index++));
-		}
-	}
-
+			
 	@Test(expected = IllegalArgumentException.class)
 	public void testNullInput() {
 		assertExceptionMessage(null, "Missing Inputs");
@@ -236,18 +211,15 @@ public class PlateauScanEngineTest {
 		}};
 		
 		List<Explorer> deployedExplorers = createTestExplorers(explorerInputs.iterator(), surface);
-		List<ExplorerPosition> expectedPositions = createExpectedPositions(expectedResults);
-		doExpectedExplorerInvocations(deployedExplorers, expectedPositions);
 		when(surface.getDeployedExplorers()).thenReturn(deployedExplorers);
 		when(surfaceRepository.save(surface)).thenReturn(surface);
 		
-		assertThat(scanEngine.scan(surfaceId), equalTo(expectedResults));
+		assertThat(scanEngine.scan(surfaceId), equalTo(surface));
 		
 		verify(surface, times(1)).getDeployedExplorers();
 		verify(surfaceRepository, atLeastOnce()).save(surface);
 		deployedExplorers.forEach((Explorer explorer) -> {			
 			verify(explorer, atLeastOnce()).excuteInstructions(surface);
-			verify(explorer, atLeastOnce()).getCurrentPosition();
 		});
 	}
 	
