@@ -19,27 +19,27 @@ import javax.validation.constraints.NotNull;
 public class ExecutionResultResource {
 
 	@JsonProperty("startPosition")
-	@ApiModelProperty(required = true, value = "Start Position")
+	@ApiModelProperty(required = true, value = "Start Position", readOnly = true)
 	@NotNull
 	private Position startPosition;
 
 	@JsonProperty("finalPosition")
-	@ApiModelProperty(required = true, value = "Final position")
+	@ApiModelProperty(required = true, value = "Final position", readOnly = true)
 	@NotNull
 	private Position finalPosition;
 
 	@JsonProperty("instruction")
-	@ApiModelProperty(required = true, value = "Instruction")
+	@ApiModelProperty(required = true, value = "Instruction", readOnly = true)
 	@NotNull
 	private String instruction;
 
 	@JsonProperty("status")
-	@ApiModelProperty(required = true, value = "Status of Execution")
+	@ApiModelProperty(required = true, value = "Status of Execution", readOnly = true)
 	@NotNull
 	private String status;
 
 	@JsonProperty("notifications")
-	@ApiModelProperty(value = "Details of Execution")
+	@ApiModelProperty(value = "Details of Execution", readOnly = true)
 	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 	private List<String> notifications = new ArrayList<>();
 

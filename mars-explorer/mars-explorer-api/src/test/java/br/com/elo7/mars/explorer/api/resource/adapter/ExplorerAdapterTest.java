@@ -60,12 +60,8 @@ public class ExplorerAdapterTest extends FixtureTest {
 	public void testAdaptExpandedResource() {
 		Explorer explorer = surface.getDeployedExplorers().iterator().next();
 		ExplorerResource explorerResource = map(explorer);
-		Link link = JaxRsLinkBuilder
-				.linkTo(explorerResource.getEndpointClass())
-				.slash(explorerResource.getId())
-				.withSelfRel();
-
-		Resource<ExplorerResource> expected = explorerResource.buildResource(link);
+		List<Link> links = buildLinks(explorerResource);
+		Resource<ExplorerResource> expected = explorerResource.buildResource(links);
 		assertThat(adapter.adaptExpandedResource(explorer), equalTo(expected));
 	}
 
@@ -73,8 +69,7 @@ public class ExplorerAdapterTest extends FixtureTest {
 	public void testAdaptAll() {
 		Collection<Explorer> explorers = surface.getDeployedExplorers();
 		List<Link> links = new ArrayList<>();
-		List<ExplorerResource> explorerResources = mapCollection(explorers, links);
-		
+		List<ExplorerResource> explorerResources = mapCollection(explorers, links);		
 		Resources<ExplorerResource> expected = new Resources<>(explorerResources, links);		
 		assertThat(adapter.adaptAll(explorers), equalTo(expected));
 	}
@@ -104,13 +99,21 @@ public class ExplorerAdapterTest extends FixtureTest {
 		List<ExplorerResource> explorerResources = new ArrayList<>();
 		deployedExplorers.stream().forEach((Explorer explorer) -> {
 			ExplorerResource resource = map(explorer);
-			Link link = JaxRsLinkBuilder
-					.linkTo(resource.getEndpointClass())
-					.slash(resource.getId())
-					.withRel(resource.getRel());
-			links.add(link);
+			links.addAll(buildLinks(resource));
 		});
 		return explorerResources;
+	}
+	
+	private List<Link> buildLinks(ExplorerResource explorerResource) {
+		List<Link> links = new ArrayList<>();
+		explorerResource.getRels().forEach((rel) -> {
+			Link link = JaxRsLinkBuilder
+					.linkTo(explorerResource.getEndpointClass())
+					.slash(explorerResource.getId())
+					.withRel(rel);
+			links.add(link);
+		});
+		return links;
 	}
 
 	private List<ExecutionResultResource> mapExecutions(Collection<ExecutionResult> executionResults) {

@@ -16,7 +16,7 @@ import org.springframework.hateoas.Resource;
  *
  * @author pedrotoliveira
  */
-public abstract class BaseResource implements Serializable  {
+public abstract class BaseResource implements Serializable {
 
 	private static final long serialVersionUID = -6298081853568281878L;
 
@@ -33,11 +33,11 @@ public abstract class BaseResource implements Serializable  {
 	 *
 	 * @return Link relation
 	 */
-	@ApiModelProperty("Resource Link Relation")
-	public abstract String getRel();
+	@ApiModelProperty("Resource Link Relations")
+	public abstract List<String> getRels();
 
 	@JsonProperty("errors")
-	@ApiModelProperty("Error Messages")
+	@ApiModelProperty(value = "Error Messages", readOnly = true)
 	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
 	private List<Message> errors = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public abstract class BaseResource implements Serializable  {
 		return this;
 	}
 
-	public List<Message>  getErrors() {
+	public List<Message> getErrors() {
 		return errors;
 	}
 
@@ -54,9 +54,9 @@ public abstract class BaseResource implements Serializable  {
 		this.errors = errors;
 	}
 
-    public void addError(final Message error) {
-        getErrors().add(error);
-    }
+	public void addError(final Message error) {
+		getErrors().add(error);
+	}
 
 	/**
 	 * Build Resource Representation with Links

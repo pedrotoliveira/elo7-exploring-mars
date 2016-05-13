@@ -16,12 +16,12 @@ import javax.validation.constraints.NotNull;
 public class Dimension {
 
 	@JsonProperty("xAxis")
-	@ApiModelProperty(required = true, value = "X Axis")
+	@ApiModelProperty(name = "xAxis", value = "XAxis", required = true, example = "1")
 	@NotNull
 	private Integer xAxis;
-	
+
 	@JsonProperty("yAxis")
-	@ApiModelProperty(required = true, value = "Y Axis")
+	@ApiModelProperty(name = "yAxis", value = "YAxis", required = true, example = "2")
 	@NotNull
 	private Integer yAxis;
 
@@ -58,7 +58,7 @@ public class Dimension {
 	public void setyAxis(Integer yAxis) {
 		this.yAxis = yAxis;
 	}
-	
+
 	@JsonIgnore
 	public String formattedInput() {
 		return String.format("%d %d", getxAxis(), getyAxis());

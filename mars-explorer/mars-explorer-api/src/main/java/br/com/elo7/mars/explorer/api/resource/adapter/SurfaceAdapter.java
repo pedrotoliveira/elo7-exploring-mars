@@ -21,62 +21,62 @@ import org.springframework.stereotype.Component;
 @Component
 public class SurfaceAdapter implements ResourceAdapter<Surface, SurfaceResource> {
 
-    @Autowired
-    private ExplorerAdapter explorerAdapter;
+	@Autowired
+	private ExplorerAdapter explorerAdapter;
 
-    @Override
-    public Resource<SurfaceResource> adaptExpandedResource(Surface domain) {
-        SurfaceResource surfaceResource = map(domain);
-        surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
-        Link link = JaxRsLinkBuilder
-                .linkTo(surfaceResource.getEndpointClass())
-                .slash(surfaceResource.getId())
-                .withRel(surfaceResource.getRel());
+	@Override
+	public Resource<SurfaceResource> adaptExpandedResource(Surface domain) {
+		SurfaceResource surfaceResource = map(domain);
+		surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
+		List<Link> links = buildLinks(surfaceResource);
+		return surfaceResource.buildResource(links);
+	}
 
-        return surfaceResource.buildResource(link);
-    }
-
-    @Override
-    public Resource<SurfaceResource> adaptResource(Surface domain) {
-        SurfaceResource surfaceResource = map(domain);
-        Link selfLink = JaxRsLinkBuilder
-                .linkTo(surfaceResource.getEndpointClass())
-                .slash(surfaceResource.getId())
-                .withRel(surfaceResource.getRel());
-
-        Resource<SurfaceResource> resource = surfaceResource.buildResource(selfLink);
+	@Override
+	public Resource<SurfaceResource> adaptResource(Surface domain) {
+		SurfaceResource surfaceResource = map(domain);
+		List<Link> links = buildLinks(surfaceResource);
+		Resource<SurfaceResource> resource = surfaceResource.buildResource(links);
 		List<Link> explorersLinks = explorerAdapter.adaptAll(domain.getDeployedExplorers()).getLinks();
 		resource.add(explorersLinks);
-        return resource;
-    }
+		return resource;
+	}
 
-    @Override
-    public Resources<SurfaceResource> adaptAll(Collection<Surface> domainCollection) {
-        List<SurfaceResource> surfaceResources = new ArrayList<>();
-        List<Link> links = new ArrayList<>();
-        domainCollection.stream().forEach((domain) -> {
-            SurfaceResource surfaceResource = map(domain);
-            Link link = JaxRsLinkBuilder
-                    .linkTo(surfaceResource.getEndpointClass())
-                    .slash(surfaceResource.getId())
-                    .withRel(surfaceResource.getRel());
+	@Override
+	public Resources<SurfaceResource> adaptAll(Collection<Surface> domainCollection) {
+		List<SurfaceResource> surfaceResources = new ArrayList<>();
+		List<Link> links = new ArrayList<>();
+		domainCollection.stream().forEach((domain) -> {
+			SurfaceResource surfaceResource = map(domain);
+			links.addAll(buildLinks(surfaceResource));
 
 			surfaceResource.deployedExplorers(explorerAdapter.adaptAll(domain.getDeployedExplorers()));
-            surfaceResources.add(surfaceResource);
-            links.add(link);
-        });
-        return new Resources<>(surfaceResources, links);
-    }
+			surfaceResources.add(surfaceResource);
+		});
+		return new Resources<>(surfaceResources, links);
+	}
 
-    private SurfaceResource map(Surface domain) {
-        return new SurfaceResource()
-                .id(domain.getId())
-                .dimension(new Dimension(domain.getxAxis(), domain.getyAxis()))
-                .createdDate(domain.getCreatedDate())
-                .explorersPositions(domain.getDeployedExplorers());
-    }
+	private List<Link> buildLinks(SurfaceResource surfaceResource) {
+		List<Link> links = new ArrayList<>();
+		surfaceResource.getRels().forEach((rel) -> {
+			Link link = JaxRsLinkBuilder
+					.linkTo(surfaceResource.getEndpointClass())
+					.slash(surfaceResource.getId())
+					.withRel(rel);
+			links.add(link);
+		});
+		return links;
+	}
 
-    public void setExplorerAdapter(ExplorerAdapter explorerAdapter) {
-        this.explorerAdapter = explorerAdapter;
-    }
+	private SurfaceResource map(Surface domain) {
+		return new SurfaceResource()
+				.id(domain.getId())
+				.dimension(new Dimension(domain.getxAxis(), domain.getyAxis()))
+				.createdDate(domain.getCreatedDate())
+				.explorersPositions(domain.getExplorersPosition());
+	}
+
+	public void setExplorerAdapter(ExplorerAdapter explorerAdapter) {
+		this.explorerAdapter = explorerAdapter;
+	}
 }

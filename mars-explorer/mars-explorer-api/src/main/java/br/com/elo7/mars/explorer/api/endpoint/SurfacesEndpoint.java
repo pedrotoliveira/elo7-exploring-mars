@@ -46,8 +46,8 @@ public class SurfacesEndpoint {
 		@ApiResponse(code = 500, message = "Failure")
 	})
 	public Response get(
-			@ApiParam(value = "Max Results Per Page") @QueryParam("max") @DefaultValue("20") Integer max,
-			@ApiParam(value = "Page") @QueryParam("page") @DefaultValue("0") Integer page) {
+			@ApiParam(value = "Max Results Per Page") @QueryParam("max") @DefaultValue("20") int max,
+			@ApiParam(value = "Page") @QueryParam("page") @DefaultValue("0") int page) {
 
 		PageRequest pageRequest = new PageRequest(page, max);
 		Page<Surface> surfaceCollection = surfaceRepository.findAll(pageRequest);

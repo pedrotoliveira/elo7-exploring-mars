@@ -54,8 +54,8 @@ public class SurfaceEndpoint {
     @ApiOperation(value = "Retrieve a Created Surface", notes = "Retrieve a Surface", nickname = "getById")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK", response = SurfaceResource.class),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 500, message = "Failure")
+        @ApiResponse(code = 404, message = "Not Found", response = Message.class),
+        @ApiResponse(code = 500, message = "Failure", response = Message.class)
     })
     public Response get(
             @ApiParam("Surface Id") @NotNull @PathParam("id") String id,
@@ -80,12 +80,12 @@ public class SurfaceEndpoint {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK", response = SurfaceResource.class),
         @ApiResponse(code = 201, message = "Created", response = SurfaceResource.class),
-        @ApiResponse(code = 400, message = "Bad Request"),
-        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 400, message = "Bad Request", response = SurfaceResource.class),
+        @ApiResponse(code = 404, message = "Not Found", response = SurfaceResource.class),
         @ApiResponse(code = 500, message = "Failure")
     })
     public Response post(
-            @ApiParam("Surface Resource") @NotNull @Valid SurfaceResource surfaceResource,
+            @ApiParam(value = "SurfaceResource", required = true) @NotNull @Valid SurfaceResource surfaceResource,
             @ApiParam("Show Execution Details") @QueryParam("details") @DefaultValue("true") boolean details,
             @ApiParam("Expand The Resource") @DefaultValue("false") @QueryParam("expand") boolean expand) {
 
@@ -130,6 +130,11 @@ public class SurfaceEndpoint {
             return Response.status(INTERNAL_SERVER_ERROR).entity(resource).build();
         }
     }
+	
+	@Path("/{id}")
+	public Class<ExplorerEndpoint> getExplorerEnpoint() {
+		return ExplorerEndpoint.class;
+	}
 
     public void setSurfaceRepository(SurfaceRepository surfaceRepository) {
         this.surfaceRepository = surfaceRepository;

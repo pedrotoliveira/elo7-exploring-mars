@@ -1,0 +1,25 @@
+delModel Schema
+{
+  "id": "string",
+  "dimension": {
+    "xAxis": 0,
+    "yAxis": 0
+  },
+  "createdDate": "2016-05-13T21:54:56.807Z",
+  "deployedExplorers": {
+    "content": [
+      {
+        "getxAxis": 0,
+        "getyAxis": 0,
+        "direction": "string",
+        "instructions": "string"
+      },
+      {
+        "getxAxis": 0,
+        "getyAxis": 0,
+        "direction": "string",
+        "instructions": "string"
+      }
+    ]
+  }
+}

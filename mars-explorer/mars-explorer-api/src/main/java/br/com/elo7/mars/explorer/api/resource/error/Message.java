@@ -36,26 +36,26 @@ public class Message implements Serializable {
 
 	@JsonProperty("id")
 	@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-	@ApiModelProperty(value = "Error Id")
-	private Integer id;	
+	@ApiModelProperty(name = "id", value = "Error Id", example = "1", readOnly = true)
+	private Integer id;
 	@JsonProperty("code")
-	@ApiModelProperty(value = "Error Code")
+	@ApiModelProperty(name = "code", value = "Error Code", example = "500", readOnly = true)
 	private Integer code;
 	@JsonProperty("type")
-	@ApiModelProperty(value = "Error Type")
+	@ApiModelProperty(name = "type", value = "Error Type", readOnly = true)
 	private MessageType type;
 	@JsonProperty("description")
-	@ApiModelProperty(value = "Description")
+	@ApiModelProperty(name = "description", value = "Description", example = "Null Pointer Exception", readOnly = true)
 	private String description;
-	@JsonProperty("httpReason")	
-	@ApiModelProperty(value = "HTTP Reason")
+	@JsonProperty("httpReason")
+	@ApiModelProperty(name = "httpReason", value = "HTTP Reason", example = "Internal Server Error", readOnly = true)
 	private String httpReason;
 	@JsonProperty("date")
 	@JsonSerialize(using = DateTimeJsonSerializer.class)
-	@ApiModelProperty(value = "Date")
-	private DateTime date = new DateTime();	
+	@ApiModelProperty(value = "Date", readOnly = true)
+	private DateTime date = new DateTime();
 	@JsonSerialize(include = JsonSerialize.Inclusion.NON_EMPTY)
-	@ApiModelProperty(value = "Error Details and Links to Documentation")
+	@ApiModelProperty(value = "Error Details and Links to Documentation", readOnly = true)
 	private List<String> notifications = new ArrayList<>();
 
 	public Message() {

@@ -61,24 +61,16 @@ public class SurfaceAdapterTest extends FixtureTest {
 	public void testAdaptExpandedResource() {
 		SurfaceResource surfaceResource = map(surface);
 		surfaceResource.deployedExplorers(explorerAdapter.adaptAll(surface.getDeployedExplorers()));
-		Link selfLink = JaxRsLinkBuilder
-				.linkTo(surfaceResource.getEndpointClass())
-				.slash(surfaceResource.getId())
-				.withRel(surfaceResource.getRel());
-
-		Resource<SurfaceResource> expected = surfaceResource.buildResource(selfLink);
+		List<Link> links = buildLinks(surfaceResource);
+		Resource<SurfaceResource> expected = surfaceResource.buildResource(links);
 		assertThat(adapter.adaptExpandedResource(surface), equalTo(expected));
 	}
 
 	@Test
 	public void testAdaptResource() {
 		SurfaceResource surfaceResource = map(surface);
-		Link selfLink = JaxRsLinkBuilder
-				.linkTo(surfaceResource.getEndpointClass())
-				.slash(surfaceResource.getId())
-				.withRel(surfaceResource.getRel());
-
-		Resource<SurfaceResource> expected = surfaceResource.buildResource(selfLink);
+		List<Link> links = buildLinks(surfaceResource);
+		Resource<SurfaceResource> expected = surfaceResource.buildResource(links);
 		List<Link> explorersLinks = explorerAdapter.adaptAll(surface.getDeployedExplorers()).getLinks();
 		expected.add(explorersLinks);
 		assertThat(adapter.adaptResource(surface), equalTo(expected));
@@ -93,14 +85,10 @@ public class SurfaceAdapterTest extends FixtureTest {
 
 		surfaces.stream().forEach((item) -> {
 			SurfaceResource surfaceResource = map(item);
-			Link link = JaxRsLinkBuilder
-					.linkTo(surfaceResource.getEndpointClass())
-					.slash(surfaceResource.getId())
-					.withRel(surfaceResource.getRel());
+			links.addAll(buildLinks(surfaceResource));
 
 			surfaceResource.deployedExplorers(explorerAdapter.adaptAll(item.getDeployedExplorers()));
-			surfaceResources.add(surfaceResource);
-			links.add(link);
+			surfaceResources.add(surfaceResource);			
 		});
 		
 		Resources<SurfaceResource> expected = new Resources<>(surfaceResources, links);
@@ -112,6 +100,18 @@ public class SurfaceAdapterTest extends FixtureTest {
 				.id(surface.getId())
 				.dimension(new Dimension(surface.getxAxis(), surface.getyAxis()))
 				.createdDate(surface.getCreatedDate());
+	}
+	
+	private List<Link> buildLinks(SurfaceResource surfaceResource) {
+		List<Link> links = new ArrayList<>();
+		surfaceResource.getRels().forEach((rel) -> {
+			Link link = JaxRsLinkBuilder
+					.linkTo(surfaceResource.getEndpointClass())
+					.slash(surfaceResource.getId())
+					.withRel(rel);
+			links.add(link);
+		});
+		return links;
 	}
 
 	private String validSurfaceInput() {
