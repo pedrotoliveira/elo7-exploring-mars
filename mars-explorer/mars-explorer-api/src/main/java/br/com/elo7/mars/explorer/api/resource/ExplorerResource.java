@@ -64,7 +64,7 @@ public class ExplorerResource extends BaseResource {
 	private List<ExecutionResultResource> executionResults = new ArrayList<>();
 
 	@JsonProperty("registeredInstructions")
-	@ApiModelProperty(value = "The Registered Instrauctions", readOnly = true)
+	@ApiModelProperty(value = "The Registered Instructions", readOnly = true)
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<String> registeredInstructions = new ArrayList<>();
 

@@ -4,6 +4,7 @@ import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
 import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceScanResult;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang.Validate;
 
@@ -16,8 +17,8 @@ class MarsExplorer implements Explorer {
 
 	private String id;
 	private ExplorerPosition currentPosition;
-	private Collection<InstructionAction> registeredInstructions;
-	private Collection<ExecutionResult> executionResults;
+	private List<InstructionAction> registeredInstructions;
+	private List<ExecutionResult> executionResults;
 
 	public MarsExplorer() {
 	}
@@ -68,26 +69,26 @@ class MarsExplorer implements Explorer {
 	}
 	
 	@Override
-	public Collection<ExecutionResult> getExecutionResults() {
+	public List<ExecutionResult> getExecutionResults() {
 		if (executionResults == null) {
 			this.executionResults = new ArrayList<>();
 		}
 		return executionResults;
 	}
 
-	public void setExecutionResults(Collection<ExecutionResult> executionResults) {
+	public void setExecutionResults(List<ExecutionResult> executionResults) {
 		this.executionResults = executionResults;
 	}
 
 	@Override
-	public Collection<InstructionAction> getRegisteredInstructions() {
+	public List<InstructionAction> getRegisteredInstructions() {
 		if (registeredInstructions == null) {
 			this.registeredInstructions = new ArrayList<>();
 		}
 		return registeredInstructions;
 	}
 
-	public void setRegisteredInstructions(Collection<InstructionAction> registredInstructions) {
+	public void setRegisteredInstructions(List<InstructionAction> registredInstructions) {
 		this.registeredInstructions = registredInstructions;
 	}
 

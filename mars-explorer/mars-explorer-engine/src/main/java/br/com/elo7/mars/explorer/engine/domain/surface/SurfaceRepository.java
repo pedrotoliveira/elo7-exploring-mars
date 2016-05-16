@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SurfaceRepository extends MongoRepository<Surface, String> {
+	
+	Surface findByDeployedExplorersId(String explorerId);
+	
 }
