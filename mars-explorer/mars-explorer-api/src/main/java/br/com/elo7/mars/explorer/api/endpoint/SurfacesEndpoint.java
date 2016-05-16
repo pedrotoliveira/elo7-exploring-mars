@@ -1,9 +1,7 @@
 package br.com.elo7.mars.explorer.api.endpoint;
 
 import br.com.elo7.mars.explorer.api.resource.SurfaceResource;
-import br.com.elo7.mars.explorer.api.resource.adapter.ResourceAdapter;
-import br.com.elo7.mars.explorer.engine.domain.surface.Surface;
-import br.com.elo7.mars.explorer.engine.domain.surface.SurfaceRepository;
+import br.com.elo7.mars.explorer.api.service.SurfaceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,9 +15,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,10 +27,8 @@ import org.springframework.stereotype.Component;
 @Api(value = "Surfaces Collections", description = "The Surfaces Collections", produces = "application/json")
 public class SurfacesEndpoint {
 
-	@Autowired
-	private SurfaceRepository surfaceRepository;
-	@Autowired
-	private ResourceAdapter<Surface, SurfaceResource> adapter;
+    @Autowired
+    private SurfaceService surfaceService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -48,23 +41,14 @@ public class SurfacesEndpoint {
 	public Response get(
 			@ApiParam(value = "Max Results Per Page") @QueryParam("max") @DefaultValue("20") int max,
 			@ApiParam(value = "Page") @QueryParam("page") @DefaultValue("0") int page) {
-
-		PageRequest pageRequest = new PageRequest(page, max);
-		Page<Surface> surfaceCollection = surfaceRepository.findAll(pageRequest);
-
-		if (surfaceCollection.hasContent()) {
-			Resources<SurfaceResource> resources = adapter.adaptAll(surfaceCollection.getContent());
-			return Response.ok(resources).build();
-		} else {
-			return Response.noContent().build();
-		}
+        return Response.ok(surfaceService.findAll(max, page)).build();
 	}
 
-	public void setSurfaceRepository(SurfaceRepository surfaceRepository) {
-		this.surfaceRepository = surfaceRepository;
-	}
+    public SurfaceService getSurfaceService() {
+        return surfaceService;
+    }
 
-	public void setAdapter(ResourceAdapter<Surface, SurfaceResource> adapter) {
-		this.adapter = adapter;
-	}
+    public void setSurfaceService(SurfaceService surfaceService) {
+        this.surfaceService = surfaceService;
+    }
 }

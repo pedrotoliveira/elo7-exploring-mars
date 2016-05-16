@@ -2,7 +2,6 @@ package br.com.elo7.mars.explorer.api.resource.adapter;
 
 import br.com.elo7.mars.explorer.api.resource.ExecutionResultResource;
 import br.com.elo7.mars.explorer.api.resource.ExplorerResource;
-import br.com.elo7.mars.explorer.api.resource.SurfaceResource;
 import br.com.elo7.mars.explorer.engine.domain.explorer.ExecutionResult;
 import br.com.elo7.mars.explorer.engine.domain.explorer.Explorer;
 import java.util.ArrayList;
@@ -44,12 +43,12 @@ public class ExplorerAdapter implements ResourceAdapter<Explorer, ExplorerResour
 	private List<ExplorerResource> mapCollection(Collection<Explorer> deployedExplorers, List<Link> links) {
 		List<ExplorerResource> explorerResources = new ArrayList<>();
 		deployedExplorers.stream().forEach((Explorer explorer) -> {
-			ExplorerResource resource = map(explorer);			
+			ExplorerResource resource = map(explorer);
 			links.addAll(buildLinks(resource));
 		});
 		return explorerResources;
 	}
-	
+
 	private List<Link> buildLinks(ExplorerResource explorerResource) {
 		List<Link> links = new ArrayList<>();
 		explorerResource.getRels().forEach((rel) -> {
@@ -64,7 +63,7 @@ public class ExplorerAdapter implements ResourceAdapter<Explorer, ExplorerResour
 
 	private ExplorerResource map(Explorer explorer) {
 		return new ExplorerResource()
-				.id(explorer.getId())				
+				.id(explorer.getId())
 				.currentPosition(explorer.getCurrentPosition())
 				.instructions(explorer.getRegisteredInstructions())
 				.executionResults(mapExecutions(explorer.getExecutionResults()));
