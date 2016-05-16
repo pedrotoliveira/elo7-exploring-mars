@@ -9,7 +9,7 @@ https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c
  - Uma Sonda não pode ser colocada no mesmo lugar que outra. Caso isso aconteça será lançada uma Exception.
  - Quando uma Sonda encontrar um obstáculo ela marcará aquela instrução como "failed" e passará para a próxima.
  - As sondas primeiro são "instaladas" para depois executar as instruções em sequencia, seguindo a ordem de sua instalação.
- - Workflow da Engine:  createSurface -> createExplorers -> registerInstructions -> executeInstructions.
+ - Workflow da Engine:  createSurface -> deployExplorers -> registerInstructions -> executeInstructions.
  
 
 ## Project Modules:
@@ -24,7 +24,7 @@ mvn spring-boot:run
 
 ### API Documentation (Swagger)
  - http://localhost:8080/mars-explorer/
- -- Acessando a documentação é possível ver quais serviços foram expostos.
+ - Acessando a documentação é possível ver quais serviços foram expostos.
 
 ### API WADL
  - http://localhost:8080/mars-explorer/api/application.wadl
