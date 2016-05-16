@@ -4,9 +4,6 @@ Teste de Programação Elo7
 Descrição do Teste:
 https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c
 
-## Modelo
-//TODO: Adicionar modelo.
-
 ## Minhas Suposições Sobre a Solução
  - Uma Sonda deve ser colocada dentro dos limites da Superfície
  - Uma Sonda não pode ser colocada no mesmo lugar que outra. Caso isso aconteça será lançada uma Exception.
@@ -27,7 +24,7 @@ mvn spring-boot:run
 
 ### API Documentation (Swagger)
  - http://localhost:8080/mars-explorer/
- Acessando a documentação é possível ver quais serviços foram expostos.
+ -- Acessando a documentação é possível ver quais serviços foram expostos.
 
 ### API WADL
  - http://localhost:8080/mars-explorer/api/application.wadl

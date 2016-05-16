@@ -118,6 +118,11 @@ public class SurfaceServiceProvider implements SurfaceService {
         this.surfaceRepository = surfaceRepository;
     }
 
+    @Override
+    public Resource<ExplorerResource> findExplorer(String explorerId) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public void setAdapter(ResourceAdapter<Surface, SurfaceResource> adapter) {
         this.adapter = adapter;
     }
@@ -125,10 +130,4 @@ public class SurfaceServiceProvider implements SurfaceService {
     public void setSurfaceScanEngine(SurfaceScanEngine surfaceScanEngine) {
         this.surfaceScanEngine = surfaceScanEngine;
     }
-
-    @Override
-    public Resource<ExplorerResource> findExplorer(String explorerId) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
 }
