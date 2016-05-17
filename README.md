@@ -12,12 +12,12 @@ https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c
  - Workflow da Engine:  createSurface -> deployExplorers -> registerInstructions -> executeInstructions.
  - Uma vez executada a instrução da sonda, a instrução é removida da lista de execução.
 
- PS: Eu não implementei um mecanismo para atualizar as instruções das sondas instaladas
+ PS: Eu não implementei um mecanismo para atualizar as instruções das sondas instaladas o/
  
 
 ## Project Modules:
  - mars-explorer-engine: Engine de criação e manipulação das sondas.
- - mars-explorer-api: API Rest para a engine. (WIP)
+ - mars-explorer-api: API Rest para a engine.
  
 ### Rodando a API da Engine via linha de comando:
 ```
@@ -32,3 +32,34 @@ mvn spring-boot:run
 ### API WADL
  - http://localhost:8080/mars-explorer/api/application.wadl
  - http://localhost:8080/mars-explorer/api/application.wadl?detail=true
+
+### Teste
+```
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "dimension": {
+    "xAxis": 5,
+    "yAxis": 5
+  },
+  "deployedExplorers": {
+    "content": [
+      {
+        "xAxis": 1,
+        "yAxis": 2,
+        "direction": "N",
+        "instructions": "LMLMLMLMM"
+      },
+      {
+        "xAxis": 3,
+        "yAxis": 3,
+        "direction": "N",
+        "instructions": "MMRMMRMRRM"
+      }
+    ]
+  }
+}' 'http://localhost:8080/mars-explorer/api/surface?details=false&expand=false'
+```
+Saída experada:
+["1 3 N","5 5 N"]
+
+- Exemplo no RESTClient
+![alt tag](https://github.com/pedrotoliveira/elo7-exploring-mars/blob/master/docs/exemplo-saida-restclient.png)
