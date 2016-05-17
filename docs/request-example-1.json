@@ -1,24 +1,21 @@
-delModel Schema
 {
-  "id": "string",
   "dimension": {
     "xAxis": 5,
     "yAxis": 5
   },
-  "createdDate": "2016-05-13T21:54:56.807Z",
   "deployedExplorers": {
     "content": [
       {
-        "getxAxis": 1,
-        "getyAxis": 2,
+        "xAxis": 1,
+        "yAxis": 2,
         "direction": "N",
-        "instructions": "string"
+        "instructions": "LMLMLMLMM"
       },
       {
-        "getxAxis": 0,
-        "getyAxis": 0,
-        "direction": "string",
-        "instructions": "string"
+        "xAxis": 3,
+        "yAxis": 3,
+        "direction": "N",
+        "instructions": "MMRMMRMRRM"
       }
     ]
   }

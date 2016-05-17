@@ -10,6 +10,9 @@ https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c
  - Quando uma Sonda encontrar um obstáculo ela marcará aquela instrução como "failed" e passará para a próxima.
  - As sondas primeiro são "instaladas" para depois executar as instruções em sequencia, seguindo a ordem de sua instalação.
  - Workflow da Engine:  createSurface -> deployExplorers -> registerInstructions -> executeInstructions.
+ - Uma vez executada a instrução da sonda, a instrução é removida da lista de execução.
+
+ PS: Eu não implementei um mecanismo para atualizar as instruções das sondas instaladas
  
 
 ## Project Modules:

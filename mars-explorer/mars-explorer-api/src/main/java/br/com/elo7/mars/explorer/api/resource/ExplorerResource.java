@@ -106,6 +106,11 @@ public class ExplorerResource extends BaseResource {
 		this.executionResults = executionResults;
 		return this;
 	}
+	
+	public ExplorerResource instructions(String instructions) {
+		this.instructions = instructions;
+		return this;
+	}
 
 	public ExplorerResource instructions(Collection<InstructionAction> instructionActions) {
 		StringBuilder builder = new StringBuilder();

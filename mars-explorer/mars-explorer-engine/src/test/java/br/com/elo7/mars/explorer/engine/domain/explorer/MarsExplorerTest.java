@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
  */
 public class MarsExplorerTest extends FixtureTest {
 
-	private InstructionCollectionFactory instructionFactory = new InstructionCollectionFactory();
+	private final InstructionCollectionFactory instructionFactory = new InstructionCollectionFactory();
 
 	@Test
 	public void testGetId() {
@@ -77,17 +77,6 @@ public class MarsExplorerTest extends FixtureTest {
 			explorer.excuteInstructions(null);
 		} catch (Exception ex) {
 			assertThat(ex.getMessage(), equalTo("Surface is Null"));
-			throw ex;
-		}
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testExcuteInstructionsNoInstructionRegistered() {
-		MarsExplorer explorer = validExplorer();
-		try {
-			explorer.excuteInstructions(mock(Surface.class));
-		} catch (Exception ex) {
-			assertThat(ex.getMessage(), equalTo("No instructions registered, invoke registerInstructions first"));
 			throw ex;
 		}
 	}

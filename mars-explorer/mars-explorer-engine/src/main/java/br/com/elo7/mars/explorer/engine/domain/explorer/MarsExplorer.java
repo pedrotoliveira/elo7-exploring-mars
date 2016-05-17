@@ -54,8 +54,7 @@ class MarsExplorer implements Explorer {
 	@Override
 	public Collection<ExecutionResult> excuteInstructions(Surface surface) {
 		Validate.notNull(surface, "Surface is Null");
-		Validate.notEmpty(getRegisteredInstructions(), "No instructions registered, invoke registerInstructions first");
-
+		
 		getRegisteredInstructions().forEach(
 				(instructionAction) -> {
 					ExplorerPosition futurePosition = instructionAction.predictPosition(currentPosition);
@@ -65,6 +64,7 @@ class MarsExplorer implements Explorer {
 					getExecutionResults().add(executionResult);
 				}
 		);
+		getRegisteredInstructions().clear();
 		return getExecutionResults();
 	}
 	

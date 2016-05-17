@@ -34,7 +34,6 @@ public class SurfaceEndpoint {
 
     @Context
     private UriInfo uriInfo;
-
     @Autowired
     private SurfaceService surfaceService;
 
@@ -76,7 +75,7 @@ public class SurfaceEndpoint {
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Update a Surface and Scan", notes = "Update a Surface and Scan", nickname = "updateSurfaceAndScan")
+    @ApiOperation(value = "Add More Explorers to a Surface and Scan", notes = "Add More Explorers to a Surface and Scan", nickname = "updateSurfaceAndScan")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK", response = SurfaceResource.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Message.class),
@@ -111,9 +110,9 @@ public class SurfaceEndpoint {
     @Path("/{id}/explorers/explorer")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Deploy a Explorer and Move", notes = "Deploy a Explorer and Move", nickname = "deployAndScan")
+    @ApiOperation(value = "Deploy a New Explorer and Move", notes = "Deploy a Explorer and Move", nickname = "deployAndScan")
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "Created", response = SurfaceResource.class),
+        @ApiResponse(code = 200, message = "Created", response = SurfaceResource.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Message.class),
         @ApiResponse(code = 404, message = "Not Found", response = Message.class),
         @ApiResponse(code = 500, message = "Failure", response = Message.class)
@@ -128,4 +127,12 @@ public class SurfaceEndpoint {
     public SurfaceService getSurfaceService() {
         return surfaceService;
     }
+
+	public void setUriInfo(UriInfo uriInfo) {
+		this.uriInfo = uriInfo;
+	}
+
+	public void setSurfaceService(SurfaceService surfaceService) {
+		this.surfaceService = surfaceService;
+	}
 }

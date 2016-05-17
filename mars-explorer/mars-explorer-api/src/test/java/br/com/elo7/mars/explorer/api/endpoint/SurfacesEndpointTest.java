@@ -15,10 +15,14 @@ import static org.junit.Assert.*;
 
 import br.com.elo7.mars.explorer.api.service.SurfaceService;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
 /**
  * Surfaces Endpoint Tests
@@ -41,6 +45,7 @@ public class SurfacesEndpointTest extends FixtureTest {
 	@Before
 	public void setUp() {
 		this.endpoint = new SurfacesEndpoint();
+		this.surfaceService = Mockito.spy(surfaceService);
 		this.endpoint.setSurfaceService(surfaceService);
 
 		for (int i = 0; i < 50; i++) {
@@ -56,10 +61,12 @@ public class SurfacesEndpointTest extends FixtureTest {
 
 	@Test
 	public void testGet() {
-		for (int i = 0; i < 5; i++) {
-			Response response = endpoint.get(10, i);
+		int max = 10;
+		for (int page = 0; page < 5; page++) {
+			Response response = endpoint.get(max, page);
 			System.out.println(response);
 			assertEquals(200,  response.getStatus());
+			verify(surfaceService, atLeastOnce()).findAll(max, page);
 		}
 	}
 }
