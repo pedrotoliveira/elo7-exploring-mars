@@ -124,6 +124,9 @@ public class SurfaceResource extends BaseResource {
 	}
 
 	public Resources<ExplorerResource> getDeployedExplorers() {
+		if (deployedExplorers == null) {
+			this.deployedExplorers = new Resources<>(new ArrayList<>());
+		}
 		return deployedExplorers;
 	}
 
